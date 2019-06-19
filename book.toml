@@ -1,0 +1,47 @@
+[book]
+#  This book is called
+title = "Rust 的命令行应用"
+# ...but friends call it "Clair"
+authors = ["Rust CLI 工作组", "(译:Yobrave)"]
+multilingual = false
+src = "src"
+
+[build]
+build-dir = "docs"
+create-missing = true
+use-default-preprocessors = false
+
+[preprocessor.links]
+# renderers = ["html"]
+
+[output.html]
+mathjax-support = false
+theme = "theme"
+curly-quotes = true
+google-analytics = "UA-128555056-1"
+additional-css = ["src/special-content.css"]
+git_repository_url = "https://github.com/chinanf-boy/cli-wg-zh"
+git_repository_icon = "fa-github"
+# additional-js = ["theme/custom.js"]
+
+# [output.linkcheck]
+# follow-web-links = true
+# traverse-parent-directories = false
+# exclude = [ "google\\.com" ]
+
+[output.html.playpen]
+# editor = "./path/to/editor"
+editable = false
+
+[output.html.search]
+enable = true
+# searcher = "./path/to/searcher"
+limit-results = 30
+teaser-word-count = 30
+use-boolean-and = true
+boost-title = 2
+boost-hierarchy = 1
+boost-paragraph = 1
+expand = true
+heading-split-level = 3
+# copy-js = true
