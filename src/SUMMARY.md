@@ -5,7 +5,7 @@
 - [15 分钟内完成一个命令行应用程序](./tutorial/README.zh.md)
   - [项目设置](./tutorial/setup.zh.md)
   - [对命令行参数解析](./tutorial/cli-args.zh.md)
-  - [第一次实施](./tutorial/impl-draft.zh.md)
+  - [第一次实现](./tutorial/impl-draft.zh.md)
   - [更好的错误报告](./tutorial/errors.zh.md)
   - [给人和机器的输出](./tutorial/output.zh.md)
   - [测试](./tutorial/testing.zh.md)
