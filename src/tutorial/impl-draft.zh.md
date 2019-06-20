@@ -17,7 +17,7 @@
 **旁白：**看到了吗？这里的[`.expect`]方法？这是一个快捷函数，可以退出程序。当无法读取值（在本例中是输入的文件）时，该函数将使程序立即退出。它不是很漂亮，在下一章[更好的错误报告]我们将研究如何改进这一点。
 
 [`.expect`]: https://doc.rust-lang.org/1.31.0/std/result/enum.Result.html#method.expect
-[nicer error reporting]: ./errors.html
+[nicer error reporting]: ./errors.zh.html
 
 </aside>
 

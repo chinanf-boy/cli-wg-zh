@@ -32,8 +32,7 @@
 <!-- doc-templite END generated -->
 
 - [x] readme.md
-  - [ ] [./CODE_OF_CONDUCT.md](./CODE_OF_CONDUCT.zh.md)
-  - [ ] [./logs/2018-05-03-packaging.md](./logs/2018-05-03-packaging.zh.md)
+  <!-- - [ ] [./logs/2018-05-03-packaging.md](./logs/2018-05-03-packaging.zh.md) -->
   - [ ] [./survey-results/Readme.md](./survey-results/Readme.zh.md)
 - [x] [./src/SUMMARY.md](./src/SUMMARY.md)
   - [x] [./src/README.md](./src/README.zh.md)
@@ -52,8 +51,8 @@
     - [x] [./src/in-depth/config-files.md](./src/in-depth/config-files.zh.md)
     - [x] [./src/in-depth/exit-code.md](./src/in-depth/exit-code.zh.md)
     - [x] [./src/in-depth/human-communication.md](./src/in-depth/human-communication.zh.md)
-    - [ ] [./src/in-depth/machine-communication.md](./src/in-depth/machine-communication.zh.md)
-    - [ ] [./src/in-depth/docs.md](./src/in-depth/docs.zh.md)
+    - [x] [./src/in-depth/machine-communication.md](./src/in-depth/machine-communication.zh.md)
+    - [x] [./src/in-depth/docs.md](./src/in-depth/docs.zh.md)
 
 ### 贡献
 
