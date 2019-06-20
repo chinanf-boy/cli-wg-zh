@@ -14,6 +14,6 @@
   - [信号处理](./in-depth/signals.zh.md)
   - [使用配置文件](./in-depth/config-files.zh.md)
   - [退出代码](./in-depth/exit-code.zh.md)
-  - [与人交互](./in-depth/human-communication.zh.md)
+  - [与人交流](./in-depth/human-communication.zh.md)
   - [与机器交互](./in-depth/machine-communication.zh.md)
   - [CLI 应用程序呈现的文档](./in-depth/docs.zh.md)

@@ -47,13 +47,13 @@
     - [x] [./src/tutorial/setup.md](./src/tutorial/setup.zh.md)
     - [x] [./src/tutorial/testing.md](./src/tutorial/testing.zh.md)
   - in-depth
-    - [ ] [./src/in-depth/README.md](./src/in-depth/README.zh.md)
-    - [ ] [./src/in-depth/config-files.md](./src/in-depth/config-files.zh.md)
-    - [ ] [./src/in-depth/docs.md](./src/in-depth/docs.zh.md)
-    - [ ] [./src/in-depth/exit-code.md](./src/in-depth/exit-code.zh.md)
-    - [ ] [./src/in-depth/human-communication.md](./src/in-depth/human-communication.zh.md)
+    - [x] [./src/in-depth/README.md](./src/in-depth/README.zh.md)
+    - [x] [./src/in-depth/signals.md](./src/in-depth/signals.zh.md)
+    - [x] [./src/in-depth/config-files.md](./src/in-depth/config-files.zh.md)
+    - [x] [./src/in-depth/exit-code.md](./src/in-depth/exit-code.zh.md)
+    - [x] [./src/in-depth/human-communication.md](./src/in-depth/human-communication.zh.md)
     - [ ] [./src/in-depth/machine-communication.md](./src/in-depth/machine-communication.zh.md)
-    - [ ] [./src/in-depth/signals.md](./src/in-depth/signals.zh.md)
+    - [ ] [./src/in-depth/docs.md](./src/in-depth/docs.zh.md)
 
 ### 贡献
 
