@@ -9,7 +9,7 @@
   - [更好的错误报告](./tutorial/errors.zh.md)
   - [给人和机器的输出](./tutorial/output.zh.md)
   - [测试](./tutorial/testing.zh.md)
-  - [包装和分发一个 Rust 工具](./tutorial/packaging.zh.md)
+  - [打包和分发一个 Rust 工具](./tutorial/packaging.zh.md)
 - [深入的主题](./in-depth/README.zh.md)
   - [信号处理](./in-depth/signals.zh.md)
   - [使用配置文件](./in-depth/config-files.zh.md)

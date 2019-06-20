@@ -43,9 +43,9 @@
     - [x] [./src/tutorial/errors.md](./src/tutorial/errors.zh.md)
     - [x] [./src/tutorial/impl-draft.md](./src/tutorial/impl-draft.zh.md)
     - [x] [./src/tutorial/output.md](./src/tutorial/output.zh.md)
-    - [ ] [./src/tutorial/packaging.md](./src/tutorial/packaging.zh.md)
+    - [x] [./src/tutorial/packaging.md](./src/tutorial/packaging.zh.md)
     - [x] [./src/tutorial/setup.md](./src/tutorial/setup.zh.md)
-    - [ ] [./src/tutorial/testing.md](./src/tutorial/testing.zh.md)
+    - [x] [./src/tutorial/testing.md](./src/tutorial/testing.zh.md)
   - in-depth
     - [ ] [./src/in-depth/README.md](./src/in-depth/README.zh.md)
     - [ ] [./src/in-depth/config-files.md](./src/in-depth/config-files.zh.md)
