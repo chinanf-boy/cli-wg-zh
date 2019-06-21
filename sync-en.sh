@@ -1,6 +1,6 @@
 cat './.mds-list' | while read line || [[ -n ${line} ]]
 do
-    testseq="what.md"
+    testseq="zh.md"
     if [[ $line =~ $testseq || "$line" == "" ]]; then
         echo "skip $line"
     else

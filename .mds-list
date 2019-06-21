@@ -55,3 +55,13 @@
 ./source/src/tutorial/testing.zh.md
 ./source/survey-results/Readme.md
 ./source/survey-results/Readme.zh.md
+./source/src/tutorial/cli-args.svg
+./source/src/tutorial/setup.svg
+./source/survey-results/crates.svg
+./source/survey-results/gaps.svg
+./source/survey-results/languages.svg
+./source/survey-results/packaging.svg
+./source/survey-results/platforms.svg
+./source/survey-results/rust-user-since.svg
+./source/survey-results/what-to-improve.svg
+./source/survey-results/why-rust.svg
