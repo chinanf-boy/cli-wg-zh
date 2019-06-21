@@ -15,7 +15,7 @@
 
 ---
 
-## 校对 🀄️
+## 校对 ✅
 
 <!-- doc-templite START generated -->
 <!-- repo = 'rust-lang-nursery/cli-wg' -->
