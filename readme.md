@@ -33,7 +33,7 @@
 
 - [x] readme.md
   <!-- - [ ] [./logs/2018-05-03-packaging.md](./logs/2018-05-03-packaging.zh.md) -->
-  - [ ] [Rust CLI 调研](./survey-results/Readme.zh.md)
+  - [x] [Rust CLI 调研](./survey-results/Readme.zh.md)
 - [x] [./src/SUMMARY.md](./src/SUMMARY.md)
 - [x] [开始](./src/README.zh.md)
 - [x] [15 分钟内完成一个命令行应用程序](./src/tutorial/README.zh.md)
