@@ -44,7 +44,7 @@ The list is: [1, 2, 3]
 
 <aside>
 
-**旁白：**“用户友好”的打印是使用[`Display`] trait，调试输出（人类可读，但面向开发人员）是使用[`Debug`] trait。您可以在[`std::fmt`模块的文档][std::fmt]找到，有关`println!`使用语法的更多信息。
+**旁白：** “用户友好”的打印是使用[`Display`] trait，调试输出（人类可读，但面向开发人员）是使用[`Debug`] trait。您可以在[`std::fmt`模块的文档][std::fmt]找到，有关`println!`使用语法的更多信息。
 
 [`display`]: https://doc.rust-lang.org/1.31.0/std/fmt/trait.Display.html
 [`debug`]: https://doc.rust-lang.org/1.31.0/std/fmt/trait.Debug.html
@@ -58,7 +58,7 @@ The list is: [1, 2, 3]
 
 <aside>
 
-**旁白：**在大多数操作系统上，程序可以写入两个输出流，`stdout`和`stderr`。 `stdout`是程序的实际输出，而`stderr`则允许错误和其他消息，并与`stdout`分隔开来。这样的话，当是错误的事件发生，(错误)输出就能存储到一个文件或管道到其他程序。
+**旁白：** 在大多数操作系统上，程序可以写入两个输出流，`stdout`和`stderr`。 `stdout`是程序的实际输出，而`stderr`则允许错误和其他消息，并与`stdout`分隔开来。这样的话，当是错误的事件发生，(错误)输出就能存储到一个文件或管道到其他程序。
 
 </aside>
 
@@ -187,7 +187,7 @@ $ cargo run --bin output-log
 
 <aside>
 
-**提示：**经验表明，即使是小的 CLI，但有用的话，使用寿命可能是以年计的。（即使是作为一个暂时的解决方案。）如果你的应用不能工作了，和某人（或是未来的你）需要理解应用，那么`--verbose`标志的详细日志输出，就能让这个过程缩短。[clap-verbosity-flag]箱子包含一个添加`--verbose`的方法，仅限该项目使用的是`structopt`。
+**提示：** 经验表明，即使是小的 CLI，但有用的话，使用寿命可能是以年计的。（即使是作为一个暂时的解决方案。）如果你的应用不能工作了，和某人（或是未来的你）需要理解应用，那么`--verbose`标志的详细日志输出，就能让这个过程缩短。[clap-verbosity-flag]箱子包含一个添加`--verbose`的方法，仅限该项目使用的是`structopt`。
 
 [clap-verbosity-flag]: https://crates.io/crates/clap-verbosity-flag
 

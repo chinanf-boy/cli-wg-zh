@@ -1,0 +1,441 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js">
+
+<head>
+    <!-- Book generated using mdBook -->
+    <meta charset="UTF-8">
+    <title>测试 - Rust 的命令行应用</title>
+    <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#ffffff" />
+
+    <link rel="shortcut icon" href="../favicon.png">
+    <link rel="stylesheet" href="../css/variables.css">
+    <link rel="stylesheet" href="../css/general.css">
+    <link rel="stylesheet" href="../css/chrome.css">
+    <link rel="stylesheet" href="../css/print.css" media="print">
+
+    <!-- Fonts -->
+    <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800"
+        rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro:500" rel="stylesheet" type="text/css">
+
+    <!-- Highlight.js Stylesheets -->
+    <link rel="stylesheet" href="../highlight.css">
+    <link rel="stylesheet" href="../tomorrow-night.css">
+    <link rel="stylesheet" href="../ayu-highlight.css">
+
+    <!-- Custom theme stylesheets -->
+    
+    <link rel="stylesheet" href="../src/special-content.css">
+    
+
+    
+</head>
+
+<body class="light">
+    <!-- Provide site root to javascript -->
+    <script type="text/javascript">var path_to_root = "../";</script>
+
+    <!-- Work around some values being stored in localStorage wrapped in quotes -->
+    <script type="text/javascript">
+        try {
+            var theme = localStorage.getItem('mdbook-theme');
+            var sidebar = localStorage.getItem('mdbook-sidebar');
+
+            if (theme.startsWith('"') && theme.endsWith('"')) {
+                localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+            }
+
+            if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+            }
+        } catch (e) { }
+    </script>
+
+    <!-- Set the theme before any content is loaded, prevents flash -->
+    <script type="text/javascript">
+        var theme;
+        try { theme = localStorage.getItem('mdbook-theme'); } catch (e) { }
+        if (theme === null || theme === undefined) { theme = 'light'; }
+        document.body.className = theme;
+        document.querySelector('html').className = theme + ' js';
+    </script>
+
+    <!-- Hide / unhide sidebar before it is displayed -->
+    <script type="text/javascript">
+        var html = document.querySelector('html');
+        var sidebar = 'hidden';
+        if (document.body.clientWidth >= 1080) {
+            try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch (e) { }
+            sidebar = sidebar || 'visible';
+        }
+        html.classList.remove('sidebar-visible');
+        html.classList.add("sidebar-" + sidebar);
+    </script>
+
+    <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+        <ol class="chapter"><li class="affix"><a href="../README.zh.html">开始</a></li><li><a href="../tutorial/README.zh.html"><strong aria-hidden="true">1.</strong> 15 分钟内完成一个命令行应用程序</a></li><li><ol class="section"><li><a href="../tutorial/setup.zh.html"><strong aria-hidden="true">1.1.</strong> 项目设置</a></li><li><a href="../tutorial/cli-args.zh.html"><strong aria-hidden="true">1.2.</strong> 对命令行参数解析</a></li><li><a href="../tutorial/impl-draft.zh.html"><strong aria-hidden="true">1.3.</strong> 第一次实现</a></li><li><a href="../tutorial/errors.zh.html"><strong aria-hidden="true">1.4.</strong> 更好的错误报告</a></li><li><a href="../tutorial/output.zh.html"><strong aria-hidden="true">1.5.</strong> 给人和机器的输出</a></li><li><a href="../tutorial/testing.zh.html" class="active"><strong aria-hidden="true">1.6.</strong> 测试</a></li><li><a href="../tutorial/packaging.zh.html"><strong aria-hidden="true">1.7.</strong> 打包和分发一个 Rust 工具</a></li></ol></li><li><a href="../in-depth/README.zh.html"><strong aria-hidden="true">2.</strong> 深入的主题</a></li><li><ol class="section"><li><a href="../in-depth/signals.zh.html"><strong aria-hidden="true">2.1.</strong> 信号处理</a></li><li><a href="../in-depth/config-files.zh.html"><strong aria-hidden="true">2.2.</strong> 使用配置文件</a></li><li><a href="../in-depth/exit-code.zh.html"><strong aria-hidden="true">2.3.</strong> 退出代码</a></li><li><a href="../in-depth/human-communication.zh.html"><strong aria-hidden="true">2.4.</strong> 与人交流</a></li><li><a href="../in-depth/machine-communication.zh.html"><strong aria-hidden="true">2.5.</strong> 与机器交互</a></li><li><a href="../in-depth/docs.zh.html"><strong aria-hidden="true">2.6.</strong> CLI 应用程序呈现的文档</a></li></ol></li></ol>
+    </nav>
+
+    <div id="page-wrapper" class="page-wrapper">
+
+        <div class="page">
+            
+            <div id="menu-bar" class="menu-bar">
+                <div id="menu-bar-sticky-container">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents"
+                            aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <!-- START - Rust Cookbook customization -->
+                        <button id="edit-button" class="icon-button" type="button" title="Fork and edit" aria-label="Fork and edit"
+                            aria-haspopup="true" aria-expanded="false" aria-controls="edit">
+                            <i class="fa fa-edit">Edit</i>
+                        </button>
+                        <!-- END - Rust Cookbook customization -->
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme"
+                            aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light <span class="default">(default)</span></button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)"
+                            aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                        
+                    </div>
+
+                    <h1 class="menu-title">Rust 的命令行应用</h1>
+                    
+                        <div class="right-buttons">
+                            <a href="../print.html" title="Print this book" aria-label="Print this book">
+                                <i id="print-button" class="fa fa-print"></i>
+                            </a>
+                            
+                        </div>
+                    </div>
+                </div>
+
+            
+            <div id="search-wrapper" class="hidden">
+                <form id="searchbar-outer" class="searchbar-outer">
+                    <input type="search" name="search" id="searchbar" name="searchbar" placeholder="Search this book ..."
+                        aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                </form>
+                <div id="searchresults-outer" class="searchresults-outer hidden">
+                    <div id="searchresults-header" class="searchresults-header"></div>
+                    <ul id="searchresults">
+                    </ul>
+                </div>
+            </div>
+            
+
+            <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+            <script type="text/javascript">
+                document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                Array.from(document.querySelectorAll('#sidebar a')).forEach(function (link) {
+                    link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                });
+            </script>
+
+            <!-- // START - Rust Cookbook customization -->
+            <script>
+                document.getElementById("edit-button").addEventListener("click", function () {
+                    var editWindow = window.open("https://github.com/chinanf-boy/cli-wg-zh/edit/master/src/tutorial/testing.zh.md");
+                });</script>
+            <!-- // END - Rust Cookbook customization -->
+
+            <div id="content" class="content">
+                <main>
+                    <a class="header" href="#测试" id="测试"><h1>测试</h1></a>
+<p>经过几十年的软件开发，人们发现了一个事实：未经测试的软件不会工作。（许多人甚至会说：“大多数测试过的软件也不会工作。”但我们都是乐观主义者，对吧？）因此，为了确保您的程序完成您期望它做的，测试它是明智的选择。</p>
+<p>一个简单的方法是写一个<code>README</code>文件，描述程序应执行的操作。当您准备好发布新版本时，请通过<code>README</code>确保行为仍如预期。您也可以写下程序对错误输入的反应，把这当成一个更严格的练习。</p>
+<p>还有一个好主意：在你写代码之前，就构思<code>README</code>。</p>
+<aside>
+<p><strong>旁白：</strong> 可以看看<a href="TDD">测试驱动开发</a>，如果你还没头绪的话。</p>
+</aside>
+<a class="header" href="#自动化测试" id="自动化测试"><h2>自动化测试</h2></a>
+<p>现在，这一切都变得很好，且花式多样，但要手工做这些吗？那可能需要很多时间。与此同时，许多人开始喜欢告诉计算机，帮他们做事情。我们来谈谈如何自动化这些测试。</p>
+<p>Rust 有一个内置的测试框架，所以我们从编写第一个测试开始：</p>
+<pre><code class="language-rust ignore">#[test]
+fn check_answer_validity() {
+    assert_eq!(answer(), 42);
+}
+</code></pre>
+<p>你可以把这段代码放到几乎所有的文件中，<code>cargo test</code>会找到并运行它。这里的关键是<code>#[test]</code>属性。它允许’构建系统’发现这些函数，并将它们作为测试运行，以验证它们不会恐慌崩溃。</p>
+<aside class="exercise">
+<p><strong>读者练习：</strong> 使此测试工作。</p>
+<p>您应该以如下输出结束：</p>
+<pre><code class="language-text">running 1 test
+test check_answer_validity ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out
+</code></pre>
+</aside>
+<p>现在我们看到了我们可以<em>怎样</em>编写测试，我们还需要弄清楚要测试<em>什么</em>。正如您所看到的，编写函数断言(assert)相当容易。但是，CLI 应用程序通常不止一个函数！更糟糕的是，它经常需要处理用户输入、读文件和写输出。</p>
+<a class="header" href="#使代码具备可测试性" id="使代码具备可测试性"><h2>使代码具备可测试性</h2></a>
+<p>测试功能有两种互补的方法：测试构建完整应用程序的小单元，这些方法称为“单元测试”。还有“从外部”测试<strong>最终</strong>应用程序，称为“黑盒测试”或“集成测试”。让我们从第一个开始。</p>
+<p>为了弄清楚我们应该测试什么，让我们看看我们的程序功能是什么。<code>grrs</code>主要的工作就是，应该打印出与给定(文本)模式匹配的行。那么，让我们为这个(功能)编写单元测试：我们希望确保我们最重要的一段逻辑代码能够正常工作，并且我们希望这，以一种不会依赖于周围的任何设置代码的方式进行（例如，处理 cli 参数的代码）。</p>
+<p>回到我们<code>grrs</code>的<a href="impl-draft.zh.html">首次实现一文</a>，我们将此代码块添加到<code>main</code>函数：</p>
+<pre><code class="language-rust ignore">// ...
+for line in content.lines() {
+    if line.contains(&amp;args.pattern) {
+        println!(&quot;{}&quot;, line);
+    }
+}
+</code></pre>
+<p>遗憾的是，这并不容易测试。首先，它在 main 函数中，所以我们不能轻易地调用它。通过将这段代码移动到一个函数（本例子是<code>find_matches</code>）中，可以很容易地解决这一问题：</p>
+<pre><pre class="playpen"><code class="language-rust no_run">
+# #![allow(unused_variables)]
+#fn main() {
+fn find_matches(content: &amp;str, pattern: &amp;str) {
+    for line in content.lines() {
+        if line.contains(pattern) {
+            println!(&quot;{}&quot;, line);
+        }
+    }
+}
+#}</code></pre></pre>
+<p>现在，我们可以在测试中调用这个函数，看看它的输出是什么：</p>
+<pre><code class="language-rust ignore">#[test]
+fn find_a_match() {
+    find_matches(&quot;lorem ipsum\ndolor sit amet&quot;, &quot;lorem&quot;);
+    assert_eq!( // uhhhh
+</code></pre>
+<p>或者… 我们可以吗？现在嘛，<code>find_matches</code>会直接打印到<code>stdout</code>，即终端上显示。我们不太能在测试中轻易捕捉它！这是在先实现，后编写测试时，经常出现的一个问题：因我们已经编写了一个函数，而它与使用它的上下文紧密集成(或是粘连)在一起。</p>
+<aside class="note">
+<p><strong>注：</strong> 在编写小型 CLI 应用程序时，这完全可以。没有必要所有东西都可以测试！而且，重要的是要考虑代码的哪些部分，可能需要编写单元测试。虽然我们(似乎)看到，可以很容易将此函数更改为可测试的(闭环状态)，但情况并非总是如此。</p>
+</aside>
+<p>好吧，我们怎样才能让这个变得可测试？我们需要以某种方式捕获输出。Rust 的标准库有一些处理 I/O（输入/输出）的简洁抽象，我们将使用一个<a href="https://doc.rust-lang.org/1.31.0/std/io/trait.Write.html"><code>std::io::Write</code></a>。这是一个<a href="https://doc.rust-lang.org/book/ch10-02-traits.html">trait</a>，它抽象了我们可以写(write)的东西，包括字符串,还有<code>stdout</code>。</p>
+<p>如果这是接触 rust 后，你第一次听到“trait”（或特质，即行为接口），那你就要认真对待了。trait 是 Rust 最强大的功能之一。你可以把它们想象成 Java 中的接口，或者在 Haskell 中类型类（无论你熟悉什么）。它们允许您抽象不同类型可以共享的行为。使用 trait 的代码可用非常通用和灵活的方式表达思想。这意味着，它也很难（以正常人类的顺序）阅读。但不要让这种情况吓倒你：即使是多年来一直使用 rust 的人，也不总是能立即得到通用代码的行为。在这种情况下，它有助于思考具体的用途。例如，在我们的例子中，我们抽象的行为是“写它”。要实现（“impl”）这个类型的示例包括：终端的标准输出、文件、内存中的缓冲区或 TCP 网络连接。（向下滚动到<a href="https://doc.rust-lang.org/1.31.0/std/io/trait.Write.html">文件<code>std::io::Write</code></a>，查看“实现人员”名单。）</p>
+<p>有了这些知识，让我们改变函数，接受第三个参数。而它应该是实现<code>Write</code>的。 这样，我们就可以在测试中，提供一个简单的字符串，并对其进行断言。以下是我们编写的这一版本的<code>find_matches</code>：</p>
+<pre><code class="language-rust ignore">fn find_matches(content: &amp;str, pattern: &amp;str, mut writer: impl std::io::Write) {
+    for line in content.lines() {
+        if line.contains(pattern) {
+            writeln!(writer, &quot;{}&quot;, line);
+        }
+    }
+}
+</code></pre>
+<p>新参数是<code>mut writer</code>也就是说，我们称之为“writer”的可变(mut)事物。它的类型是<code>impl std::io::Write</code>，可以将理解为“实现<code>Write</code>trait”。还要注意我们如何将我们以前用的<code>println!(…)</code>，替换成<code>writeln!(writer, …)</code>。<code>println!</code>工作原理与<code>writeln!</code>相同，只是输出的对象总是标准输出。</p>
+<p>现在，我们可以测试输出：</p>
+<pre><code class="language-rust ignore">#[test]
+fn find_a_match() {
+    let mut result = Vec::new();
+    find_matches(&quot;lorem ipsum\ndolor sit amet&quot;, &quot;lorem&quot;, &amp;mut result);
+    assert_eq!(result, b&quot;lorem ipsum\n&quot;);
+}
+</code></pre>
+<p>要在我们的应用程序代码中使用它，我们必须在<code>main</code>中，通过添加<a href="https://doc.rust-lang.org/1.31.0/std/io/fn.stdout.html"><code>&amp;mut std::io::stdout()</code></a>作为第三个参数，改成调用<code>find_matches</code>。下面是一个 main 函数的例子，它建立在我们在前几章中所看到的基础上，并使用我们提取的<code>find_matches</code>函数：</p>
+<pre><code class="language-rust ignore">fn main() -&gt; Result&lt;(), ExitFailure&gt; {
+    let args = Cli::from_args();
+    let content = std::fs::read_to_string(&amp;args.path)
+        .with_context(|_| format!(&quot;could not read file `{}`&quot;, args.path.display()))?;
+
+    find_matches(&amp;content, &amp;args.pattern, &amp;mut std::io::stdout());
+
+    Ok(())
+}
+</code></pre>
+<aside class="note">
+<p><strong>注：</strong> 因为<code>stdout</code>需要字节(byte)（不是字符串），我们使用<code>std::io::Write</code>而不是<code>std::fmt::Write</code>。 因此，在我们的测试中，我们把空向量赋给“writer”（其类型将推断为<code>Vec&lt;u8&gt;</code>），而在<code>assert_eq!</code>我们使用一个<code>b&quot;foo&quot;</code>。(<code>b</code>前缀使其成为<em>字节字符串文本</em>，以它的类型是<code>&amp;[u8]</code>，而不是<code>&amp;str</code>。）</p>
+</aside>
+<aside class="note">
+<p><strong>注：</strong> 我们还可以使这个函数返回一个<code>String</code>，但这会改变它的行为。我们选择不再直接写入终端，而是将所有内容收集到一个字符串中，并在末尾一次性转储所有结果。</p>
+</aside>
+<aside class="exercise">
+<p><strong>读者练习：</strong>
+<a href="https://doc.rust-lang.org/1.31.0/std/macro.writeln.html"><code>writeln!</code></a>返回一个<a href="https://doc.rust-lang.org/1.31.0/std/io/type.Result.html"><code>io::Result</code></a>，因为写入可能会失败，例如当缓冲区已满且无法扩展时。向<code>find_matches</code>添加错误处理。</p>
+</aside>
+<p>我们刚刚看到了如何使这段代码变得容易测试。我们已经</p>
+<ol>
+<li>确定了我们应用程序的核心部分之一，</li>
+<li>把它放在自己的函数里，</li>
+<li>使其更加灵活。</li>
+</ol>
+<p>尽管我们的目标是让它成为可测试的，但最终得到的结果，实际上是一段非常惯用和可重用的 rust 代码。真好啊！</p>
+<a class="header" href="#将代码拆分为库和二进制目标" id="将代码拆分为库和二进制目标"><h2>将代码拆分为库和二进制目标</h2></a>
+<p>我们可以在这里再做一件事。到目前为止，我们已经把我们写的所有东西，都放在了<code>src/main.rs</code>文件。这意味着我们当前的项目，(构建)会生成一个二进制文件。但我们也可以将代码作为库提供，如下所示：</p>
+<ol>
+<li>把<code>find_matches</code>函数放到新的<code>src/lib.rs</code>。</li>
+<li>添加一个<code>pub</code>在<code>fn</code>（也就是<code>pub fn find_matches</code>）使它成为用户可以访问的东西。</li>
+<li>从<code>src/main.rs</code>中，去除<code>find_matches</code>。</li>
+<li>在<code>fn main</code>，提前调用<code>grrs::</code>的<code>find_matches</code>，所以现在变为<code>grrs::find_matches(…)</code>. 这意味着它使用了我们刚刚编写的库中的函数！</li>
+</ol>
+<p>Rust 处理项目的方式是相当灵活的，尽早考虑将什么放入您的箱子的库中是一个好观念。例如，您可以考虑先为应用程序的特定逻辑编写一个库，然后像其他库一样在 CLI 中使用它。或者，如果您的项目有多个二进制文件，您可以将公共函数放在箱子的库部分。</p>
+<aside class="note">
+<p><strong>注：</strong> 说到如果我们继续，把所有的东西都堆到<code>src/main.rs</code>，它就会变得难以阅读。这个<a href="https://doc.rust-lang.org/1.31.0/book/ch07-00-packages-crates-and-modules.html">模块化系统</a>可以帮助您构造和组织代码。</p>
+</aside>
+<a class="header" href="#通过运行-cli-应用程序来测试它们" id="通过运行-cli-应用程序来测试它们"><h2>通过运行 CLI 应用程序来测试它们</h2></a>
+<p>到目前为止，我们已经竭尽全力测试我们应用的<em>业务逻辑</em>，结果就是搞出了<code>find_matches</code>函数。这是非常有价值的，也是向经过良好测试的代码库，迈出的第一步。（通常，这类测试称为“单元测试”。）</p>
+<p>但是，我们还有很多代码没有测试：我们为真实世界所编写的所有处理代码！假设您编写了 main 函数，但意外地留有一个硬编码字符串，而不是使用用户提供的路径参数。我们就应该为此编写测试！（这一级别的测试通常称为“集成测试”，或“系统测试”。）</p>
+<p>在其核心，我们编写的(测试)函数还是用<code>#[test]</code>声明。重要的只是我们在这些函数中做什么的问题。例如，我们希望使用项目的 main 二进制文件，并像常规程序一样运行它。我们还将把这些测试，放入新目录中的新文件中：<code>tests/cli.rs</code>。</p>
+<aside>
+<p><strong>旁白：</strong> 按照惯例，<code>cargo</code>将在<code>tests/</code>目录中查找集成测试。同样，它也会看<code>benches/</code>中的基准测试和<code>examples</code>中的示例测试。这些(测试)约定还扩展到了您主要的源代码：比如库可以有一个<code>src/lib.rs</code>文件，main 二进制文件是<code>src/main.rs</code>或者，如果有多个二进制文件，则 cargo 希望它们位于<code>src/bin/&lt;name&gt;.rs</code>. 遵循这些约定将使阅读 rust 代码的人更明了您的代码库。</p>
+</aside>
+<p>回想起来，<code>grrs</code>是一个在文件中，搜索字符串的小工具。我们之前已经测试了匹配项的查找。让我们考虑一下，我们还可以测试哪些其他功能。</p>
+<p>这是我想出来的。</p>
+<ul>
+<li>当文件不存在时，会发生什么？</li>
+<li>当没有匹配项时，输出是什么？</li>
+<li>当我们忘记一个（或两个）参数时，程序是否会出错退出？</li>
+</ul>
+<p>这些都是有效的测试用例。此外，我们还应该为“正确路径”包含一个测试用例，即我们找到至少一个匹配项，并打印出来。</p>
+<p>为了使这些测试更简单，我们将使用<a href="https://docs.rs/assert_cmd"><code>assert_cmd</code></a>箱子。它有一堆整洁的助手，允许我们运行我们的主要二进制文件，并查看它的行为。此外，我们还将添加<a href="https://docs.rs/predicates"><code>predicates</code></a>箱子，有助于<code>assert_cmd</code>的断言测试（并且有很大的错误消息）。我们不会将这些依赖项，添加到依赖主列表，而是添加到我们的<code>Cargo.toml</code>中的”dev dependencies”(开发依赖)部分。只有在开发箱子时才需要它们，而不是在使用箱子时。</p>
+<pre><code class="language-toml">[dev-dependencies]
+assert_cmd = &quot;0.10&quot;
+predicates = &quot;1&quot;
+</code></pre>
+<p>这听起来像是很多设置。不过，让我们直接上手，创建<code>tests/cli.rs</code>文件：</p>
+<pre><code class="language-rust ignore">use std::process::Command;  // Run programs
+use assert_cmd::prelude::*; // Add methods on commands
+use predicates::prelude::*; // Used for writing assertions
+
+#[test]
+fn file_doesnt_exist() -&gt; Result&lt;(), Box&lt;std::error::Error&gt;&gt; {
+    let mut cmd = Command::main_binary()?;
+    cmd.arg(&quot;foobar&quot;)
+        .arg(&quot;test/file/doesnt/exist&quot;);
+    cmd.assert()
+        .failure()
+        .stderr(predicate::str::contains(&quot;No such file or directory&quot;));
+
+    Ok(())
+}
+</code></pre>
+<p>您可以使用<code>cargo test</code>运行此测试，命令只是我们上面写的测试。第一次可能需要更长的时间，比如<code>Command::main_binary()</code>需要编译你的主要二进制文件。</p>
+<a class="header" href="#生成测试文件" id="生成测试文件"><h2>生成测试文件</h2></a>
+<p>测试我们刚刚看到的只是检查我们程序写出的一个错误信息，表示输入文件不存在。
+这是个要具备的重要测试，但可能不是最重要的那个。
+让我们现在测试下，在文件中，实际找到的匹配项吧。</p>
+<p>我们需要有一个文件，它的内容是我们知道的，这样我们才知道我们程序<em>应该</em>返回的正确匹配项，并在我们的测试中检查这个期望。一个想法是添加一个具有自定义内容的文件到项目，并在测试中使用。另一个则是在测试中创建临时文件。鉴于我们教程的情况，我们会搞下后者。具体来说，因为它更灵活，还可以用在其他案例；例如说，要测试一个改变文件的程序。</p>
+<p>要创建这些个临时文件，我们会用到<a href="https://docs.rs/tempfile/3/tempfile/"><code>tempfile</code></a>箱子。让我们将它添加到<code>Cargo.toml</code>的<code>dev-dependencies</code>:</p>
+<pre><code class="language-toml">tempfile = &quot;3&quot;
+</code></pre>
+<p>这是一个新的测试用例(，你可以在下面写另一个)，先创建一个临时文件(，命名它我们才能获得它的路径)，填充些文本，然后运行我们的程序，看看是不是正确输出。当<code>file</code> 走出作用域（函数的结尾），实际的临时文件会自动删除。</p>
+<pre><code class="language-rust ignore">use tempfile::NamedTempFile;
+use std::io::{self, Write};
+
+#[test]
+fn find_content_in_file() -&gt; Result&lt;(), Box&lt;std::error::Error&gt;&gt; {
+    let mut file = NamedTempFile::new()?;
+    writeln!(file, &quot;A test\nActual content\nMore content\nAnother test&quot;)?;
+
+    let mut cmd = Command::main_binary()?;
+    cmd.arg(&quot;test&quot;)
+        .arg(file.path());
+    cmd.assert()
+        .success()
+        .stdout(predicate::str::contains(&quot;test\nAnother test&quot;));
+
+    Ok(())
+}
+</code></pre>
+<aside class="exercise">
+<p>**读者的练习:**添加一个集成测试，题目是传递一个空字符串作为匹配模式。调整程序通过测试。</p>
+</aside>
+<a class="header" href="#测试什么" id="测试什么"><h2>测试什么?</h2></a>
+<p>尽管，编写集成测试确实有趣，还也是要花上不少时间，还要让测试持续跟上测试的变化。为了让你时间是花得更有意义，你应该三思下，你应该测试什么。</p>
+<p>总的来说，一个的想法是，为所有用户注意到的行为类型，编写集成测试。
+这意味着，你不需要覆盖所有的边缘情况。对于不同的类型，通常有一些例子就足够了，
+还可以依靠单元测试来覆盖边缘情况。</p>
+<p>最好不要把你的测试集中在你不能主动控制的事情上。
+测试<code>--help</code>的确切布局是个坏主意，
+因为它是为你生成/服务的。
+相反，您可能只想检查某些元素是否存在。</p>
+<p>根据你程序的本质，你可以尝试更多的测试技术。比如说，如果你已经提取了部分程序，并且想试着为(部分程序)所有的边缘情况，编写许多示例案例作为单元测试的话，那你应该看看<a href="https://docs.rs/proptest"><code>proptest</code></a>。又或是，你有一个消化任意文件并解析它们的程序，那就试着编写一个<a href="https://fuzz.rs/book/introduction.html">fuzzer</a>，在边缘发现 bug。</p>
+<aside>
+<p>**旁白:**你可以找到本章节，完整的、可运行的源代码，它<a href="https://github.com/rust-lang-nursery/cli-wg/tree/master/src/tutorial/testing">在这本书的库中</a>。</p>
+</aside>
+
+                </main>
+
+                <nav class="nav-wrapper" aria-label="Page navigation">
+                    <!-- Mobile navigation buttons -->
+                    
+                    <a rel="prev" href="../tutorial/output.zh.html" class="mobile-nav-chapters previous" title="Previous chapter"
+                        aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                    
+
+                    
+                    <a rel="next" href="../tutorial/packaging.zh.html" class="mobile-nav-chapters next" title="Next chapter"
+                        aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+                    
+
+                    <div style="clear: both"></div>
+                </nav>
+            </div>
+        </div>
+
+        <nav class="nav-wide-wrapper" aria-label="Page navigation">
+            
+            <a href="../tutorial/output.zh.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter"
+                aria-keyshortcuts="Left">
+                <i class="fa fa-angle-left"></i>
+            </a>
+            
+
+            
+            <a href="../tutorial/packaging.zh.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter"
+                aria-keyshortcuts="Right">
+                <i class="fa fa-angle-right"></i>
+            </a>
+            
+        </nav>
+
+    </div>
+
+    
+
+    
+    <!-- Google Analytics Tag -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-128555056-1"></script>
+    
+    <script type="text/javascript">
+        var localAddrs = ["localhost", "127.0.0.1", ""];
+        if (localAddrs.indexOf(document.location.hostname) === -1) {
+            window.dataLayer = window.dataLayer || [];
+            function gtag() { dataLayer.push(arguments); }
+            gtag('js', new Date());
+
+            gtag('config', 'UA-128555056-1');
+        }
+    </script>
+    
+
+    
+
+    
+    <script src="../elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../mark.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../searcher.js" type="text/javascript" charset="utf-8"></script>
+    
+
+    <script src="../clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../highlight.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../book.js" type="text/javascript" charset="utf-8"></script>
+
+    <!-- Custom JS scripts -->
+    
+
+    
+
+</body>
+
+</html>

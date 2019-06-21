@@ -1,0 +1,334 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js">
+
+<head>
+    <!-- Book generated using mdBook -->
+    <meta charset="UTF-8">
+    <title>对命令行参数解析 - Rust 的命令行应用</title>
+    <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#ffffff" />
+
+    <link rel="shortcut icon" href="../favicon.png">
+    <link rel="stylesheet" href="../css/variables.css">
+    <link rel="stylesheet" href="../css/general.css">
+    <link rel="stylesheet" href="../css/chrome.css">
+    <link rel="stylesheet" href="../css/print.css" media="print">
+
+    <!-- Fonts -->
+    <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800"
+        rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro:500" rel="stylesheet" type="text/css">
+
+    <!-- Highlight.js Stylesheets -->
+    <link rel="stylesheet" href="../highlight.css">
+    <link rel="stylesheet" href="../tomorrow-night.css">
+    <link rel="stylesheet" href="../ayu-highlight.css">
+
+    <!-- Custom theme stylesheets -->
+    
+    <link rel="stylesheet" href="../src/special-content.css">
+    
+
+    
+</head>
+
+<body class="light">
+    <!-- Provide site root to javascript -->
+    <script type="text/javascript">var path_to_root = "../";</script>
+
+    <!-- Work around some values being stored in localStorage wrapped in quotes -->
+    <script type="text/javascript">
+        try {
+            var theme = localStorage.getItem('mdbook-theme');
+            var sidebar = localStorage.getItem('mdbook-sidebar');
+
+            if (theme.startsWith('"') && theme.endsWith('"')) {
+                localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+            }
+
+            if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+            }
+        } catch (e) { }
+    </script>
+
+    <!-- Set the theme before any content is loaded, prevents flash -->
+    <script type="text/javascript">
+        var theme;
+        try { theme = localStorage.getItem('mdbook-theme'); } catch (e) { }
+        if (theme === null || theme === undefined) { theme = 'light'; }
+        document.body.className = theme;
+        document.querySelector('html').className = theme + ' js';
+    </script>
+
+    <!-- Hide / unhide sidebar before it is displayed -->
+    <script type="text/javascript">
+        var html = document.querySelector('html');
+        var sidebar = 'hidden';
+        if (document.body.clientWidth >= 1080) {
+            try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch (e) { }
+            sidebar = sidebar || 'visible';
+        }
+        html.classList.remove('sidebar-visible');
+        html.classList.add("sidebar-" + sidebar);
+    </script>
+
+    <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+        <ol class="chapter"><li class="affix"><a href="../README.zh.html">开始</a></li><li><a href="../tutorial/README.zh.html"><strong aria-hidden="true">1.</strong> 15 分钟内完成一个命令行应用程序</a></li><li><ol class="section"><li><a href="../tutorial/setup.zh.html"><strong aria-hidden="true">1.1.</strong> 项目设置</a></li><li><a href="../tutorial/cli-args.zh.html" class="active"><strong aria-hidden="true">1.2.</strong> 对命令行参数解析</a></li><li><a href="../tutorial/impl-draft.zh.html"><strong aria-hidden="true">1.3.</strong> 第一次实现</a></li><li><a href="../tutorial/errors.zh.html"><strong aria-hidden="true">1.4.</strong> 更好的错误报告</a></li><li><a href="../tutorial/output.zh.html"><strong aria-hidden="true">1.5.</strong> 给人和机器的输出</a></li><li><a href="../tutorial/testing.zh.html"><strong aria-hidden="true">1.6.</strong> 测试</a></li><li><a href="../tutorial/packaging.zh.html"><strong aria-hidden="true">1.7.</strong> 打包和分发一个 Rust 工具</a></li></ol></li><li><a href="../in-depth/README.zh.html"><strong aria-hidden="true">2.</strong> 深入的主题</a></li><li><ol class="section"><li><a href="../in-depth/signals.zh.html"><strong aria-hidden="true">2.1.</strong> 信号处理</a></li><li><a href="../in-depth/config-files.zh.html"><strong aria-hidden="true">2.2.</strong> 使用配置文件</a></li><li><a href="../in-depth/exit-code.zh.html"><strong aria-hidden="true">2.3.</strong> 退出代码</a></li><li><a href="../in-depth/human-communication.zh.html"><strong aria-hidden="true">2.4.</strong> 与人交流</a></li><li><a href="../in-depth/machine-communication.zh.html"><strong aria-hidden="true">2.5.</strong> 与机器交互</a></li><li><a href="../in-depth/docs.zh.html"><strong aria-hidden="true">2.6.</strong> CLI 应用程序呈现的文档</a></li></ol></li></ol>
+    </nav>
+
+    <div id="page-wrapper" class="page-wrapper">
+
+        <div class="page">
+            
+            <div id="menu-bar" class="menu-bar">
+                <div id="menu-bar-sticky-container">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents"
+                            aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <!-- START - Rust Cookbook customization -->
+                        <button id="edit-button" class="icon-button" type="button" title="Fork and edit" aria-label="Fork and edit"
+                            aria-haspopup="true" aria-expanded="false" aria-controls="edit">
+                            <i class="fa fa-edit">Edit</i>
+                        </button>
+                        <!-- END - Rust Cookbook customization -->
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme"
+                            aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light <span class="default">(default)</span></button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)"
+                            aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                        
+                    </div>
+
+                    <h1 class="menu-title">Rust 的命令行应用</h1>
+                    
+                        <div class="right-buttons">
+                            <a href="../print.html" title="Print this book" aria-label="Print this book">
+                                <i id="print-button" class="fa fa-print"></i>
+                            </a>
+                            
+                        </div>
+                    </div>
+                </div>
+
+            
+            <div id="search-wrapper" class="hidden">
+                <form id="searchbar-outer" class="searchbar-outer">
+                    <input type="search" name="search" id="searchbar" name="searchbar" placeholder="Search this book ..."
+                        aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                </form>
+                <div id="searchresults-outer" class="searchresults-outer hidden">
+                    <div id="searchresults-header" class="searchresults-header"></div>
+                    <ul id="searchresults">
+                    </ul>
+                </div>
+            </div>
+            
+
+            <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+            <script type="text/javascript">
+                document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                Array.from(document.querySelectorAll('#sidebar a')).forEach(function (link) {
+                    link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                });
+            </script>
+
+            <!-- // START - Rust Cookbook customization -->
+            <script>
+                document.getElementById("edit-button").addEventListener("click", function () {
+                    var editWindow = window.open("https://github.com/chinanf-boy/cli-wg-zh/edit/master/src/tutorial/cli-args.zh.md");
+                });</script>
+            <!-- // END - Rust Cookbook customization -->
+
+            <div id="content" class="content">
+                <main>
+                    <a class="header" href="#对命令行参数解析" id="对命令行参数解析"><h1>对命令行参数解析</h1></a>
+<p>对 cli 工具的典型调用，如下所示：</p>
+<pre><code class="language-console">$ grrs foobar test.txt
+</code></pre>
+<p>我们希望我们的程序，可以查阅<code>test.txt</code>，并打印出包含<code>foobar</code>的那些行。但是我们如何得到这两个值呢？</p>
+<p>(调用的)程序名，之后的文本，通常称为“命令行参数”或“命令行标志”（尤其是当它们看起来像<code>--this</code>的时候）。在内部，操作系统通常将它们表示为字符串列表，大致来说，它们由空格分隔。</p>
+<p>这些参数有很多考虑方式，以及如何将它们解析为更容易处理的内容。您还需要告诉程序的用户，他们需要给出哪些参数，以及期望的格式。</p>
+<a class="header" href="#获取参数" id="获取参数"><h2>获取参数</h2></a>
+<p>标准库包含函数<a href="https://doc.rust-lang.org/1.31.0/std/env/fn.args.html"><code>std::env::args()</code></a>，这给了你一个<a href="https://doc.rust-lang.org/1.31.0/std/iter/index.html">迭代器</a>，含有用户给出的命令行参数。第一个条目（在索引处<code>0</code>）将是您的程序所称的名称（例如<code>grrs</code>），接下去的条目是用户随后写下的。</p>
+<p>以这种方式，获得原始参数非常容易：</p>
+<pre><code class="language-rust ignore">let pattern = std::env::args().nth(1).expect(&quot;no pattern given&quot;);
+let path = std::env::args().nth(2).expect(&quot;no path given&quot;);
+</code></pre>
+<a class="header" href="#作为数据类型的-cli-参数" id="作为数据类型的-cli-参数"><h2>作为数据类型的 CLI 参数</h2></a>
+<p>与其把它们看作一堆文本，不如把 cli 参数看作表示程序输入的自定义数据类型。</p>
+<p>瞧瞧<code>grrs foobar test.txt</code>：有两个参数，第一个是<code>pattern</code>(模式)（要查找的字符串），然后<code>path</code>(路径)（要查找的文件）。</p>
+<p>我们还能对他们说些什么呢？嗯，首先，两者都是必需的。我们还没有讨论任何默认值，因此我们希望用户始终提供两个值。此外，我们可以稍微介绍一下它们的类型：模式应该是一个字符串，而第二个参数应该是一个文件的路径。</p>
+<p>在 Rust 中，围绕所处理的数据，构建程序是很常见的，因此这种查看 CLI 参数的方式非常适合。让我们从这个开始：</p>
+<pre><code class="language-rust ignore">struct Cli {
+    pattern: String,
+    path: std::path::PathBuf,
+}
+
+</code></pre>
+<p>这定义了一个新的结构（一个<a href="https://doc.rust-lang.org/1.31.0/book/ch05-00-structs.html"><code>struct</code></a>）它有两个字段用于存储数据：<code>pattern</code>和<code>path</code>。</p>
+<aside>
+<p><strong>旁白：</strong>
+<a href="https://doc.rust-lang.org/1.31.0/std/path/struct.PathBuf.html"><code>PathBuf</code></a>就像一个<a href="https://doc.rust-lang.org/1.31.0/std/string/struct.String.html"><code>String</code></a>，但用作跨平台工作的文件系统路径。</p>
+</aside>
+<p>现在，我们仍然需要得到进入程序的实际参数。一种选择是手动解析操作系统获得的字符串列表，并自己构建结构。它看起来像这样：</p>
+<pre><code class="language-rust ignore">let pattern = std::env::args().nth(1).expect(&quot;no pattern given&quot;);
+let path = std::env::args().nth(2).expect(&quot;no path given&quot;);
+let args = Cli {
+    pattern: pattern,
+    path: std::path::PathBuf::from(path),
+};
+</code></pre>
+<p>这样是可以的，但不太方便。但你要如何处理支持<code>--pattern=&quot;foo&quot;</code>或<code>--pattern &quot;foo&quot;</code>的要求？你又如何实现<code>--help</code>？</p>
+<a class="header" href="#使用-structopt-分析-cli-参数" id="使用-structopt-分析-cli-参数"><h2>使用 StructOpt 分析 CLI 参数</h2></a>
+<p>一个更好的方法是运用一个可用库，当然还有许多其他可用库。最流行的用于分析命令行参数的库称为<a href="https://clap.rs/"><code>clap</code></a>. 它具有您所期望的所有功能，包括对，子命令的支持、shell 补全和伟大的帮助消息。</p>
+<p>这个<a href="https://docs.rs/structopt"><code>structopt</code></a>箱子建立在<code>clap</code>之上，并提供一个“derive”宏，用来生成<code>struct</code>定义的有关<code>clap</code>代码。这很好：我们所要做的就是注释一个结构，而它将生成为，把(命令行)参数解析到字段中的代码。</p>
+<p>我们先导入<code>structopt</code>，具体先在<code>Cargo.toml</code>文件的<code>[dependencies]</code>部分，添加<code>structopt = &quot;0.2.10&quot;</code>。</p>
+<p>现在，在我们的代码中，写<code>use structopt::StructOpt;</code>，并添加<code>#[derive(StructOpt)]</code>，到我们<code>struct Cli</code>的上面。同时，我们还将编写一些文档注释。</p>
+<p>看起来像这样：</p>
+<pre><code class="language-rust ignore">use structopt::StructOpt;
+
+/// Search for a pattern in a file and display the lines that contain it.
+#[derive(StructOpt)]
+struct Cli {
+    /// The pattern to look for
+    pattern: String,
+    /// The path to the file to read
+    #[structopt(parse(from_os_str))]
+    path: std::path::PathBuf,
+}
+
+</code></pre>
+<aside class="node">
+<p><strong>旁注：</strong> （StructOpt）有很多自定义属性可以添加到字段中。例如，我们添加了一个<code>PathBuf</code>类型，让 structopt 解析。要说您想在后面的参数中，使用此字段<code>-o</code>或<code>--output</code>，您可以添加<code>#[structopt(short = &quot;o&quot;, long = &quot;output&quot;)]</code>。 有关详细信息，请参阅<a href="https://docs.rs/structopt">StructOpt 文档</a>。</p>
+</aside>
+<p>就在<code>Cli</code>结构下面，我们的模板包含<code>main</code>函数。当程序启动时，它将调用此函数。第一行是：</p>
+<pre><code class="language-rust ignore">fn main() {
+    let args = Cli::from_args();
+}
+</code></pre>
+<p>这将尝试将(命令行)参数解析为<code>Cli</code>结构。</p>
+<p>但如果失败了呢？下面就是这方式的好处：Clap 知道应期望哪个字段，以及它们期望的格式是什么。它可以自动生成一个<code>--help</code>信息，以及一些重大错误(信息)，建议您应把<code>--output</code>，而不是<code>--putput</code>作为传递参数。</p>
+<aside class="note">
+<p><strong>旁注：</strong> 这个<code>from_args</code>方法就是给<code>main</code>函数使用的。当失败时，它将打印出一个错误或帮助消息，并立即退出程序。请不要在其他地方使用它！</p>
+</aside>
+<a class="header" href="#这就是它的样子" id="这就是它的样子"><h2>这就是它的样子</h2></a>
+<p>在没有任何参数的情况下，运行它：</p>
+<pre><code class="language-console">$ cargo run
+    Finished dev [unoptimized + debuginfo] target(s) in 10.16s
+     Running `target/debug/grrs`
+error: The following required arguments were not provided:
+    &lt;pattern&gt;
+    &lt;path&gt;
+
+USAGE:
+    grrs &lt;pattern&gt; &lt;path&gt;
+
+For more information try --help
+</code></pre>
+<p>我们可以在使用时传递参数<code>cargo run</code>直接写在后面<code>--</code>：</p>
+<pre><code class="language-console">$ cargo run -- some-pattern some-file
+    Finished dev [unoptimized + debuginfo] target(s) in 0.11s
+     Running `target/debug/grrs some-pattern some-file`
+</code></pre>
+<p>如您所见，没有输出。很好：这意味着没有错误，我们的程序结束了。</p>
+<aside class="exercise">
+<p><strong>读者练习：</strong> 让此程序输出其(命令行)参数！</p>
+</aside>
+
+                </main>
+
+                <nav class="nav-wrapper" aria-label="Page navigation">
+                    <!-- Mobile navigation buttons -->
+                    
+                    <a rel="prev" href="../tutorial/setup.zh.html" class="mobile-nav-chapters previous" title="Previous chapter"
+                        aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                    
+
+                    
+                    <a rel="next" href="../tutorial/impl-draft.zh.html" class="mobile-nav-chapters next" title="Next chapter"
+                        aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+                    
+
+                    <div style="clear: both"></div>
+                </nav>
+            </div>
+        </div>
+
+        <nav class="nav-wide-wrapper" aria-label="Page navigation">
+            
+            <a href="../tutorial/setup.zh.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter"
+                aria-keyshortcuts="Left">
+                <i class="fa fa-angle-left"></i>
+            </a>
+            
+
+            
+            <a href="../tutorial/impl-draft.zh.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter"
+                aria-keyshortcuts="Right">
+                <i class="fa fa-angle-right"></i>
+            </a>
+            
+        </nav>
+
+    </div>
+
+    
+
+    
+    <!-- Google Analytics Tag -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-128555056-1"></script>
+    
+    <script type="text/javascript">
+        var localAddrs = ["localhost", "127.0.0.1", ""];
+        if (localAddrs.indexOf(document.location.hostname) === -1) {
+            window.dataLayer = window.dataLayer || [];
+            function gtag() { dataLayer.push(arguments); }
+            gtag('js', new Date());
+
+            gtag('config', 'UA-128555056-1');
+        }
+    </script>
+    
+
+    
+
+    
+    <script src="../elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../mark.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../searcher.js" type="text/javascript" charset="utf-8"></script>
+    
+
+    <script src="../clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../highlight.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../book.js" type="text/javascript" charset="utf-8"></script>
+
+    <!-- Custom JS scripts -->
+    
+
+    
+
+</body>
+
+</html>

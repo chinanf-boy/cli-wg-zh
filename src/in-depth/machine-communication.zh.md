@@ -10,7 +10,7 @@
 
 <aside>
 
-**旁白：**确保先阅读在教程中的[关于 CLI 输出的章节][output]。它包括如何将输出写入终端。
+**旁白：** 确保先阅读在教程中的[关于 CLI 输出的章节][output]。它包括如何将输出写入终端。
 
 [output]: ../tutorial/output.zh.html
 
@@ -131,7 +131,7 @@ $ rg default --json
 
 <aside>
 
-**旁白：**这就是 Visual Studio Code 的代码搜索，使用的是*ripgrep*。
+**旁白：** 这就是 Visual Studio Code 的代码搜索，使用的是*ripgrep*。
 
 </aside>
 
@@ -147,6 +147,6 @@ $ rg default --json
 
 <aside class="todo">
 
-**TODO：**讨论如何使用 stdin（请参见[α95](https://github.com/rust-lang-nursery/cli-wg/issues/95)）
+**TODO：** 讨论如何使用 stdin（请参见[α95](https://github.com/rust-lang-nursery/cli-wg/issues/95)）
 
 </aside>

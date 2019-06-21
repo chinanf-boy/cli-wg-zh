@@ -14,7 +14,7 @@
 
 <aside>
 
-**旁白：**看到了吗？这里的[`.expect`]方法？这是一个快捷函数，可以退出程序。当无法读取值（在本例中是输入的文件）时，该函数将使程序立即退出。它不是很漂亮，在下一章[更好的错误报告]我们将研究如何改进这一点。
+**旁白：** 看到了吗？这里的[`.expect`]方法？这是一个快捷函数，可以退出程序。当无法读取值（在本例中是输入的文件）时，该函数将使程序立即退出。它不是很漂亮，在下一章[更好的错误报告]我们将研究如何改进这一点。
 
 [`.expect`]: https://doc.rust-lang.org/1.31.0/std/result/enum.Result.html#method.expect
 [nicer error reporting]: ./errors.zh.html
@@ -31,7 +31,7 @@
 
 <aside class="exercise">
 
-**读者练习：**这不是最好的实现：会先把整个文件读取到内存中——不管文件有多大。找到一种方法来优化它！（一个想法可能是使用[`BufReader`]，而不是`read_to_string()`）
+**读者练习：** 这不是最好的实现：会先把整个文件读取到内存中——不管文件有多大。找到一种方法来优化它！（一个想法可能是使用[`BufReader`]，而不是`read_to_string()`）
 
 [`bufreader`]: https://doc.rust-lang.org/1.31.0/std/io/struct.BufReader.html
 

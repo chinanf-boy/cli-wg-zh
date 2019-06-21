@@ -45,7 +45,7 @@ $ grrs foobar test.txt
 
 <aside>
 
-**旁白：**
+**旁白：** 
 [`PathBuf`]就像一个[`String`]，但用作跨平台工作的文件系统路径。
 
 [`pathbuf`]: https://doc.rust-lang.org/1.31.0/std/path/struct.PathBuf.html
@@ -82,7 +82,7 @@ $ grrs foobar test.txt
 
 <aside class="node">
 
-**旁注：**（StructOpt）有很多自定义属性可以添加到字段中。例如，我们添加了一个`PathBuf`类型，让 structopt 解析。要说您想在后面的参数中，使用此字段`-o`或`--output`，您可以添加`#[structopt(short = "o", long = "output")]`。 有关详细信息，请参阅[StructOpt 文档][`structopt`]。
+**旁注：** （StructOpt）有很多自定义属性可以添加到字段中。例如，我们添加了一个`PathBuf`类型，让 structopt 解析。要说您想在后面的参数中，使用此字段`-o`或`--output`，您可以添加`#[structopt(short = "o", long = "output")]`。 有关详细信息，请参阅[StructOpt 文档][`structopt`]。
 
 </aside>
 
@@ -98,7 +98,7 @@ $ grrs foobar test.txt
 
 <aside class="note">
 
-**旁注：**这个`from_args`方法就是给`main`函数使用的。当失败时，它将打印出一个错误或帮助消息，并立即退出程序。请不要在其他地方使用它！
+**旁注：** 这个`from_args`方法就是给`main`函数使用的。当失败时，它将打印出一个错误或帮助消息，并立即退出程序。请不要在其他地方使用它！
 
 </aside>
 
@@ -132,6 +132,6 @@ $ cargo run -- some-pattern some-file
 
 <aside class="exercise">
 
-**读者练习：**让此程序输出其(命令行)参数！
+**读者练习：** 让此程序输出其(命令行)参数！
 
 </aside>

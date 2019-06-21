@@ -1,0 +1,377 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js">
+
+<head>
+    <!-- Book generated using mdBook -->
+    <meta charset="UTF-8">
+    <title>给人和机器的输出 - Rust 的命令行应用</title>
+    <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#ffffff" />
+
+    <link rel="shortcut icon" href="../favicon.png">
+    <link rel="stylesheet" href="../css/variables.css">
+    <link rel="stylesheet" href="../css/general.css">
+    <link rel="stylesheet" href="../css/chrome.css">
+    <link rel="stylesheet" href="../css/print.css" media="print">
+
+    <!-- Fonts -->
+    <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800"
+        rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro:500" rel="stylesheet" type="text/css">
+
+    <!-- Highlight.js Stylesheets -->
+    <link rel="stylesheet" href="../highlight.css">
+    <link rel="stylesheet" href="../tomorrow-night.css">
+    <link rel="stylesheet" href="../ayu-highlight.css">
+
+    <!-- Custom theme stylesheets -->
+    
+    <link rel="stylesheet" href="../src/special-content.css">
+    
+
+    
+</head>
+
+<body class="light">
+    <!-- Provide site root to javascript -->
+    <script type="text/javascript">var path_to_root = "../";</script>
+
+    <!-- Work around some values being stored in localStorage wrapped in quotes -->
+    <script type="text/javascript">
+        try {
+            var theme = localStorage.getItem('mdbook-theme');
+            var sidebar = localStorage.getItem('mdbook-sidebar');
+
+            if (theme.startsWith('"') && theme.endsWith('"')) {
+                localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+            }
+
+            if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+            }
+        } catch (e) { }
+    </script>
+
+    <!-- Set the theme before any content is loaded, prevents flash -->
+    <script type="text/javascript">
+        var theme;
+        try { theme = localStorage.getItem('mdbook-theme'); } catch (e) { }
+        if (theme === null || theme === undefined) { theme = 'light'; }
+        document.body.className = theme;
+        document.querySelector('html').className = theme + ' js';
+    </script>
+
+    <!-- Hide / unhide sidebar before it is displayed -->
+    <script type="text/javascript">
+        var html = document.querySelector('html');
+        var sidebar = 'hidden';
+        if (document.body.clientWidth >= 1080) {
+            try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch (e) { }
+            sidebar = sidebar || 'visible';
+        }
+        html.classList.remove('sidebar-visible');
+        html.classList.add("sidebar-" + sidebar);
+    </script>
+
+    <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+        <ol class="chapter"><li class="affix"><a href="../README.zh.html">开始</a></li><li><a href="../tutorial/README.zh.html"><strong aria-hidden="true">1.</strong> 15 分钟内完成一个命令行应用程序</a></li><li><ol class="section"><li><a href="../tutorial/setup.zh.html"><strong aria-hidden="true">1.1.</strong> 项目设置</a></li><li><a href="../tutorial/cli-args.zh.html"><strong aria-hidden="true">1.2.</strong> 对命令行参数解析</a></li><li><a href="../tutorial/impl-draft.zh.html"><strong aria-hidden="true">1.3.</strong> 第一次实现</a></li><li><a href="../tutorial/errors.zh.html"><strong aria-hidden="true">1.4.</strong> 更好的错误报告</a></li><li><a href="../tutorial/output.zh.html" class="active"><strong aria-hidden="true">1.5.</strong> 给人和机器的输出</a></li><li><a href="../tutorial/testing.zh.html"><strong aria-hidden="true">1.6.</strong> 测试</a></li><li><a href="../tutorial/packaging.zh.html"><strong aria-hidden="true">1.7.</strong> 打包和分发一个 Rust 工具</a></li></ol></li><li><a href="../in-depth/README.zh.html"><strong aria-hidden="true">2.</strong> 深入的主题</a></li><li><ol class="section"><li><a href="../in-depth/signals.zh.html"><strong aria-hidden="true">2.1.</strong> 信号处理</a></li><li><a href="../in-depth/config-files.zh.html"><strong aria-hidden="true">2.2.</strong> 使用配置文件</a></li><li><a href="../in-depth/exit-code.zh.html"><strong aria-hidden="true">2.3.</strong> 退出代码</a></li><li><a href="../in-depth/human-communication.zh.html"><strong aria-hidden="true">2.4.</strong> 与人交流</a></li><li><a href="../in-depth/machine-communication.zh.html"><strong aria-hidden="true">2.5.</strong> 与机器交互</a></li><li><a href="../in-depth/docs.zh.html"><strong aria-hidden="true">2.6.</strong> CLI 应用程序呈现的文档</a></li></ol></li></ol>
+    </nav>
+
+    <div id="page-wrapper" class="page-wrapper">
+
+        <div class="page">
+            
+            <div id="menu-bar" class="menu-bar">
+                <div id="menu-bar-sticky-container">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents"
+                            aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <!-- START - Rust Cookbook customization -->
+                        <button id="edit-button" class="icon-button" type="button" title="Fork and edit" aria-label="Fork and edit"
+                            aria-haspopup="true" aria-expanded="false" aria-controls="edit">
+                            <i class="fa fa-edit">Edit</i>
+                        </button>
+                        <!-- END - Rust Cookbook customization -->
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme"
+                            aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light <span class="default">(default)</span></button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)"
+                            aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                        
+                    </div>
+
+                    <h1 class="menu-title">Rust 的命令行应用</h1>
+                    
+                        <div class="right-buttons">
+                            <a href="../print.html" title="Print this book" aria-label="Print this book">
+                                <i id="print-button" class="fa fa-print"></i>
+                            </a>
+                            
+                        </div>
+                    </div>
+                </div>
+
+            
+            <div id="search-wrapper" class="hidden">
+                <form id="searchbar-outer" class="searchbar-outer">
+                    <input type="search" name="search" id="searchbar" name="searchbar" placeholder="Search this book ..."
+                        aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                </form>
+                <div id="searchresults-outer" class="searchresults-outer hidden">
+                    <div id="searchresults-header" class="searchresults-header"></div>
+                    <ul id="searchresults">
+                    </ul>
+                </div>
+            </div>
+            
+
+            <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+            <script type="text/javascript">
+                document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                Array.from(document.querySelectorAll('#sidebar a')).forEach(function (link) {
+                    link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                });
+            </script>
+
+            <!-- // START - Rust Cookbook customization -->
+            <script>
+                document.getElementById("edit-button").addEventListener("click", function () {
+                    var editWindow = window.open("https://github.com/chinanf-boy/cli-wg-zh/edit/master/src/tutorial/output.zh.md");
+                });</script>
+            <!-- // END - Rust Cookbook customization -->
+
+            <div id="content" class="content">
+                <main>
+                    <a class="header" href="#输出" id="输出"><h1>输出</h1></a>
+<a class="header" href="#打印hello-world" id="打印hello-world"><h2>打印“Hello World”</h2></a>
+<pre><pre class="playpen"><code class="language-rust">
+# #![allow(unused_variables)]
+#fn main() {
+println!(&quot;Hello World&quot;);
+#}</code></pre></pre>
+<p>嗯，很简单。很好，下一个话题。</p>
+<a class="header" href="#使用-println" id="使用-println"><h2>使用 println</h2></a>
+<p>你大概可以用<code>println!</code>宏打印你喜欢的所有东西。这个宏有一些非常惊人的功能，但也有一个特殊的语法。它期望您编写一个字符串文字作为第一个参数，其中包含由后面参数的参数值填充的占位符。</p>
+<p>例如：</p>
+<pre><pre class="playpen"><code class="language-rust">
+# #![allow(unused_variables)]
+#fn main() {
+let x = 42;
+println!(&quot;My lucky number is {}.&quot;, x);
+#}</code></pre></pre>
+<p>将打印</p>
+<pre><code class="language-console">My lucky number is 42.
+</code></pre>
+<p>上面的字符串中大括号（<code>{}</code>）是这些占位符之一。这是默认的占位符类型，尝试以人类可读的方式打印值。对于数字和字符串，这很好地工作，但并非所有类型都能做到这一点。这就是为什么还存在一个“调试表示法”，就是通过在大括号填充占位符：<code>{:?}</code>。</p>
+<p>例如，</p>
+<pre><pre class="playpen"><code class="language-rust">
+# #![allow(unused_variables)]
+#fn main() {
+let xs = vec![1, 2, 3];
+println!(&quot;The list is: {:?}&quot;, xs);
+#}</code></pre></pre>
+<p>将打印</p>
+<pre><code class="language-console">The list is: [1, 2, 3]
+</code></pre>
+<p>如果您希望自己的数据类型可以打印用于调试和日志记录，那么在大多数情况下，您可以添加<code>#[derive(Debug)]</code>在他们的定义之上。</p>
+<aside>
+<p><strong>旁白：</strong> “用户友好”的打印是使用<a href="https://doc.rust-lang.org/1.31.0/std/fmt/trait.Display.html"><code>Display</code></a> trait，调试输出（人类可读，但面向开发人员）是使用<a href="https://doc.rust-lang.org/1.31.0/std/fmt/trait.Debug.html"><code>Debug</code></a> trait。您可以在<a href="https://doc.rust-lang.org/1.31.0/std/fmt/index.html"><code>std::fmt</code>模块的文档</a>找到，有关<code>println!</code>使用语法的更多信息。</p>
+</aside>
+<a class="header" href="#打印错误" id="打印错误"><h2>打印错误</h2></a>
+<p>错误的打印应该用<code>stderr</code>，让用户和其他工具更容易将输出，传输到文件或更多工具。</p>
+<aside>
+<p><strong>旁白：</strong> 在大多数操作系统上，程序可以写入两个输出流，<code>stdout</code>和<code>stderr</code>。 <code>stdout</code>是程序的实际输出，而<code>stderr</code>则允许错误和其他消息，并与<code>stdout</code>分隔开来。这样的话，当是错误的事件发生，(错误)输出就能存储到一个文件或管道到其他程序。</p>
+</aside>
+<p>在 Rust 中，由<code>println!</code>和<code>eprintln!</code>完成，前者打印到<code>stdout</code>，而后者打印到<code>stderr</code>。</p>
+<pre><pre class="playpen"><code class="language-rust">
+# #![allow(unused_variables)]
+#fn main() {
+println!(&quot;This is information&quot;);
+eprintln!(&quot;This is an error! :(&quot;);
+#}</code></pre></pre>
+<aside>
+<p><strong>当心</strong>：打印<a href="https://en.wikipedia.org/wiki/ANSI_escape_code">转义代码</a>可能是危险的，会把用户的终端置于一个奇怪的状态，所以手动打印总要小心为妙。</p>
+<p>理想情况下，你应该使用一个箱子<code>ansi_term</code>，当处理原始转义代码，能让你（和你的用户）日子更简单。</p>
+</aside>
+<a class="header" href="#一份打印性能的报告" id="一份打印性能的报告"><h2>一份打印性能的报告</h2></a>
+<p>如果你尝试重复<code>println!</code>的话，你会发现打印到终端非常缓慢！很容易就成为以快速为目标的程序的瓶颈。要加速，这里有两件你能做的事。</p>
+<p>第一，您可能想要减少终端实际的刷新（flush）。而每一个<code>println!</code>会告诉系统<em>每次</em>都刷新一下终端，因为常见功能就是要打印一个新行。如果你并不需要这些，你可以用一个默认的 8 kB 缓冲<a href="https://doc.rust-lang.org/1.31.0/std/io/struct.BufWriter.html"><code>BufWriter</code></a>，去包裹你的<code>stdout</code>控制器。（你仍可以调用<code>BufWriter</code>的<code>.flush()</code>，若是你想要立即打印的话。)</p>
+<pre><pre class="playpen"><code class="language-rust">
+# #![allow(unused_variables)]
+#fn main() {
+use std::io::{self, Write};
+
+let stdout = io::stdout(); // 获得 stdout 实体
+let mut handle = io::BufWriter::new(stdout); // 可选: 把  stdout 的 控制权 包裹进一个 buffer
+writeln!(handle, &quot;foo: {}&quot;, 42); // 可加上 `?`， 若你关心错误的话。
+#}</code></pre></pre>
+<p>第二，获得<code>stdout</code>(或<code>stderr</code>)的一个锁也有用，并使用<code>writeln!</code>直接打印到它。这可以防止系统一遍遍重复对<code>stdout</code>上锁和解锁。</p>
+<pre><pre class="playpen"><code class="language-rust">
+# #![allow(unused_variables)]
+#fn main() {
+use std::io::{self, Write};
+
+let stdout = io::stdout(); // 获得 stdout 实体
+let mut handle = stdout.lock(); // 获得它的一个锁
+writeln!(handle, &quot;foo: {}&quot;, 42); // 可加上 `?`， 若你关心错误的话。
+#}</code></pre></pre>
+<p>你也可以把两种方法结合起来。</p>
+<a class="header" href="#显示一个进度条" id="显示一个进度条"><h2>显示一个进度条</h2></a>
+<p>一些 CLI 应用程序运行不到一秒，有些则以分钟或小时计算。
+如果你编写的是后者，你可能会想要告诉你的用户，程序的进展如何。
+针对这个，你应该试着打印有用的更新状态，想法是能让用户容易接受。</p>
+<p>使用<a href="https://crates.io/crates/indicatif">indicatif</a>箱，你可以为你的程序添加进度条和小提示。
+下面是个快餐示例：</p>
+<pre><code class="language-rust ignore">fn main() {
+    let pb = indicatif::ProgressBar::new(100);
+    for i in 0..100 {
+        do_hard_work();
+        pb.println(format!(&quot;[+] finished #{}&quot;, i));
+        pb.inc(1);
+    }
+    pb.finish_with_message(&quot;done&quot;);
+}
+</code></pre>
+<p>欲了解更多的信息，请看<a href="https://docs.rs/indicatif">文档</a>和<a href="https://github.com/mitsuhiko/indicatif/tree/master/examples">例子</a>。</p>
+<a class="header" href="#日志记录" id="日志记录"><h2>日志记录</h2></a>
+<p>要让我们程序正在发生的事情，更容易理解。我们会想要加上一些记录语句。这是最常用的方式了，但接下来的时间，它会却能带给超大的帮助。在某些考虑下，记录就如同<code>println</code>一样，除了你可以指定信息的重要性，常见的级别有 <em>error</em>, <em>warn</em>, <em>info</em>, <em>debug</em>, 和 <em>trace</em> (<em>error</em>具有最高优先级，<em>trace</em>最低的)。</p>
+<p>要将简单的日志记录添加到您的应用程序，你需要两个帮手：<a href="https://crates.io/crates/log">log</a>箱子(配有日志级别命名的宏）和一个 <em>适配器(adapter)</em>，也就是把日志输出到有用的地方。日志适配器的功能是很灵活：你想想，不仅可以把日志输出到终端，还可以是<a href="https://en.wikipedia.org/wiki/Syslog">syslog</a>，或中央日志服务器。</p>
+<p>鉴于我们现在只关心编写一个命令行应用，适配器简单用<a href="https://crates.io/crates/env_logger">env_logger</a>就好。它的名称叫做<code>env</code>，因它可能使用环境变量，来指定你命令行想要记录的部分。（当然，还有日志的级别）它会有一个时间戳和来自哪个模块，帮你前缀化你的信息，也可以简单配置日志的输出。</p>
+<p>这里有一个简单的例子:</p>
+<pre><code class="language-rust ignore">use log::{info, warn};
+
+fn main() {
+    env_logger::init();
+    info!(&quot;starting up&quot;);
+    warn!(&quot;oops, nothing implemented!&quot;);
+}
+
+</code></pre>
+<p>假设你有这个<code>src/bin/output-log.rs</code>文件,</p>
+<p>在 Linux 和 macOS，您可以像这样运行它:</p>
+<pre><code class="language-console">$ env RUST_LOG=output_log=info cargo run --bin output-log
+    Finished dev [unoptimized + debuginfo] target(s) in 0.17s
+     Running `target/debug/output-log`
+[2018-11-30T20:25:52Z INFO  output_log] starting up
+[2018-11-30T20:25:52Z WARN  output_log] oops, nothing implemented!
+</code></pre>
+<p>在 Windows PowerShell，您可以像这样运行它:</p>
+<pre><code class="language-console">$ $env:RUST_LOG=&quot;output_log=info&quot; //set the env var for the current session
+$ cargo run --bin output-log
+    Finished dev [unoptimized + debuginfo] target(s) in 0.17s
+     Running `target/debug/output-log.exe`
+[2018-11-30T20:25:52Z INFO  output_log] starting up
+[2018-11-30T20:25:52Z WARN  output_log] oops, nothing implemented!
+</code></pre>
+<p>在 Windows CMD，您可以像这样运行它:</p>
+<pre><code class="language-console">$ rem set the env var for the current session
+$ set RUST_LOG=output_log=info
+$ cargo run --bin output-log
+    Finished dev [unoptimized + debuginfo] target(s) in 0.17s
+     Running `target/debug/output-log.exe`
+[2018-11-30T20:25:52Z INFO  output_log] starting up
+[2018-11-30T20:25:52Z WARN  output_log] oops, nothing implemented!
+</code></pre>
+<p><code>RUST_LOG</code>是环境变量的名字，你可以用来设置你的日志配置。<code>env_logger</code>还包含一个构建器，所以你可以用程序调整这个配置，就比如说，默认级别信息为 <em>info</em> 。</p>
+<p>有很多日志适配器的替代品，当然还有<code>log</code>的替换或扩展。
+如果你知道你的应用要记录很多，请确保日志清晰明了，让你的用户日子舒服些。</p>
+<aside>
+<p><strong>提示：</strong> 经验表明，即使是小的 CLI，但有用的话，使用寿命可能是以年计的。（即使是作为一个暂时的解决方案。）如果你的应用不能工作了，和某人（或是未来的你）需要理解应用，那么<code>--verbose</code>标志的详细日志输出，就能让这个过程缩短。<a href="https://crates.io/crates/clap-verbosity-flag">clap-verbosity-flag</a>箱子包含一个添加<code>--verbose</code>的方法，仅限该项目使用的是<code>structopt</code>。</p>
+</aside>
+
+                </main>
+
+                <nav class="nav-wrapper" aria-label="Page navigation">
+                    <!-- Mobile navigation buttons -->
+                    
+                    <a rel="prev" href="../tutorial/errors.zh.html" class="mobile-nav-chapters previous" title="Previous chapter"
+                        aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                    
+
+                    
+                    <a rel="next" href="../tutorial/testing.zh.html" class="mobile-nav-chapters next" title="Next chapter"
+                        aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+                    
+
+                    <div style="clear: both"></div>
+                </nav>
+            </div>
+        </div>
+
+        <nav class="nav-wide-wrapper" aria-label="Page navigation">
+            
+            <a href="../tutorial/errors.zh.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter"
+                aria-keyshortcuts="Left">
+                <i class="fa fa-angle-left"></i>
+            </a>
+            
+
+            
+            <a href="../tutorial/testing.zh.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter"
+                aria-keyshortcuts="Right">
+                <i class="fa fa-angle-right"></i>
+            </a>
+            
+        </nav>
+
+    </div>
+
+    
+
+    
+    <!-- Google Analytics Tag -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-128555056-1"></script>
+    
+    <script type="text/javascript">
+        var localAddrs = ["localhost", "127.0.0.1", ""];
+        if (localAddrs.indexOf(document.location.hostname) === -1) {
+            window.dataLayer = window.dataLayer || [];
+            function gtag() { dataLayer.push(arguments); }
+            gtag('js', new Date());
+
+            gtag('config', 'UA-128555056-1');
+        }
+    </script>
+    
+
+    
+
+    
+    <script src="../elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../mark.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../searcher.js" type="text/javascript" charset="utf-8"></script>
+    
+
+    <script src="../clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../highlight.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../book.js" type="text/javascript" charset="utf-8"></script>
+
+    <!-- Custom JS scripts -->
+    
+
+    
+
+</body>
+
+</html>

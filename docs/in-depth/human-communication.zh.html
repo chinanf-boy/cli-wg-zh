@@ -1,0 +1,310 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js">
+
+<head>
+    <!-- Book generated using mdBook -->
+    <meta charset="UTF-8">
+    <title>与人交流 - Rust 的命令行应用</title>
+    <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#ffffff" />
+
+    <link rel="shortcut icon" href="../favicon.png">
+    <link rel="stylesheet" href="../css/variables.css">
+    <link rel="stylesheet" href="../css/general.css">
+    <link rel="stylesheet" href="../css/chrome.css">
+    <link rel="stylesheet" href="../css/print.css" media="print">
+
+    <!-- Fonts -->
+    <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800"
+        rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro:500" rel="stylesheet" type="text/css">
+
+    <!-- Highlight.js Stylesheets -->
+    <link rel="stylesheet" href="../highlight.css">
+    <link rel="stylesheet" href="../tomorrow-night.css">
+    <link rel="stylesheet" href="../ayu-highlight.css">
+
+    <!-- Custom theme stylesheets -->
+    
+    <link rel="stylesheet" href="../src/special-content.css">
+    
+
+    
+</head>
+
+<body class="light">
+    <!-- Provide site root to javascript -->
+    <script type="text/javascript">var path_to_root = "../";</script>
+
+    <!-- Work around some values being stored in localStorage wrapped in quotes -->
+    <script type="text/javascript">
+        try {
+            var theme = localStorage.getItem('mdbook-theme');
+            var sidebar = localStorage.getItem('mdbook-sidebar');
+
+            if (theme.startsWith('"') && theme.endsWith('"')) {
+                localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+            }
+
+            if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+            }
+        } catch (e) { }
+    </script>
+
+    <!-- Set the theme before any content is loaded, prevents flash -->
+    <script type="text/javascript">
+        var theme;
+        try { theme = localStorage.getItem('mdbook-theme'); } catch (e) { }
+        if (theme === null || theme === undefined) { theme = 'light'; }
+        document.body.className = theme;
+        document.querySelector('html').className = theme + ' js';
+    </script>
+
+    <!-- Hide / unhide sidebar before it is displayed -->
+    <script type="text/javascript">
+        var html = document.querySelector('html');
+        var sidebar = 'hidden';
+        if (document.body.clientWidth >= 1080) {
+            try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch (e) { }
+            sidebar = sidebar || 'visible';
+        }
+        html.classList.remove('sidebar-visible');
+        html.classList.add("sidebar-" + sidebar);
+    </script>
+
+    <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+        <ol class="chapter"><li class="affix"><a href="../README.zh.html">开始</a></li><li><a href="../tutorial/README.zh.html"><strong aria-hidden="true">1.</strong> 15 分钟内完成一个命令行应用程序</a></li><li><ol class="section"><li><a href="../tutorial/setup.zh.html"><strong aria-hidden="true">1.1.</strong> 项目设置</a></li><li><a href="../tutorial/cli-args.zh.html"><strong aria-hidden="true">1.2.</strong> 对命令行参数解析</a></li><li><a href="../tutorial/impl-draft.zh.html"><strong aria-hidden="true">1.3.</strong> 第一次实现</a></li><li><a href="../tutorial/errors.zh.html"><strong aria-hidden="true">1.4.</strong> 更好的错误报告</a></li><li><a href="../tutorial/output.zh.html"><strong aria-hidden="true">1.5.</strong> 给人和机器的输出</a></li><li><a href="../tutorial/testing.zh.html"><strong aria-hidden="true">1.6.</strong> 测试</a></li><li><a href="../tutorial/packaging.zh.html"><strong aria-hidden="true">1.7.</strong> 打包和分发一个 Rust 工具</a></li></ol></li><li><a href="../in-depth/README.zh.html"><strong aria-hidden="true">2.</strong> 深入的主题</a></li><li><ol class="section"><li><a href="../in-depth/signals.zh.html"><strong aria-hidden="true">2.1.</strong> 信号处理</a></li><li><a href="../in-depth/config-files.zh.html"><strong aria-hidden="true">2.2.</strong> 使用配置文件</a></li><li><a href="../in-depth/exit-code.zh.html"><strong aria-hidden="true">2.3.</strong> 退出代码</a></li><li><a href="../in-depth/human-communication.zh.html" class="active"><strong aria-hidden="true">2.4.</strong> 与人交流</a></li><li><a href="../in-depth/machine-communication.zh.html"><strong aria-hidden="true">2.5.</strong> 与机器交互</a></li><li><a href="../in-depth/docs.zh.html"><strong aria-hidden="true">2.6.</strong> CLI 应用程序呈现的文档</a></li></ol></li></ol>
+    </nav>
+
+    <div id="page-wrapper" class="page-wrapper">
+
+        <div class="page">
+            
+            <div id="menu-bar" class="menu-bar">
+                <div id="menu-bar-sticky-container">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents"
+                            aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <!-- START - Rust Cookbook customization -->
+                        <button id="edit-button" class="icon-button" type="button" title="Fork and edit" aria-label="Fork and edit"
+                            aria-haspopup="true" aria-expanded="false" aria-controls="edit">
+                            <i class="fa fa-edit">Edit</i>
+                        </button>
+                        <!-- END - Rust Cookbook customization -->
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme"
+                            aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light <span class="default">(default)</span></button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)"
+                            aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                        
+                    </div>
+
+                    <h1 class="menu-title">Rust 的命令行应用</h1>
+                    
+                        <div class="right-buttons">
+                            <a href="../print.html" title="Print this book" aria-label="Print this book">
+                                <i id="print-button" class="fa fa-print"></i>
+                            </a>
+                            
+                        </div>
+                    </div>
+                </div>
+
+            
+            <div id="search-wrapper" class="hidden">
+                <form id="searchbar-outer" class="searchbar-outer">
+                    <input type="search" name="search" id="searchbar" name="searchbar" placeholder="Search this book ..."
+                        aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                </form>
+                <div id="searchresults-outer" class="searchresults-outer hidden">
+                    <div id="searchresults-header" class="searchresults-header"></div>
+                    <ul id="searchresults">
+                    </ul>
+                </div>
+            </div>
+            
+
+            <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+            <script type="text/javascript">
+                document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                Array.from(document.querySelectorAll('#sidebar a')).forEach(function (link) {
+                    link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                });
+            </script>
+
+            <!-- // START - Rust Cookbook customization -->
+            <script>
+                document.getElementById("edit-button").addEventListener("click", function () {
+                    var editWindow = window.open("https://github.com/chinanf-boy/cli-wg-zh/edit/master/src/in-depth/human-communication.zh.md");
+                });</script>
+            <!-- // END - Rust Cookbook customization -->
+
+            <div id="content" class="content">
+                <main>
+                    <a class="header" href="#与人交流" id="与人交流"><h1>与人交流</h1></a>
+<p>确保先在教程中，阅读<a href="../tutorial/output.zh.html">关于 CLI 输出的章节</a>。它包括如何将输出写入终端，而本章将讨论<em>什么</em>是输出。</p>
+<a class="header" href="#当一切都好的时候" id="当一切都好的时候"><h2>当一切都好的时候</h2></a>
+<p>即使一切正常，报告应用程序的进度也很有用。在这些信息中，尽量做到大众性和简洁性。不要在日志中，使用过多的技术术语。记住这一准则：应用程序没有崩溃，那么，用户就没有理由查找错误。</p>
+<p>最重要的是，保持交流风格的一致性。使用相同的前缀和句式结构，使日志易于浏览。</p>
+<p>尝试让应用程序的输出，讲述它正在做什么，以及它如何影响用户。这可能涉及到，显示所涉及步骤的时间线，甚至是长期运行操作的进度条和指示器。用户在任何时候，都不应该感觉到应用程序，在做一些他们无法理解的神秘事情。</p>
+<a class="header" href="#当很难知道发生了什么事时" id="当很难知道发生了什么事时"><h2>当很难知道发生了什么事时</h2></a>
+<p>当交流不可名状时，保持一致是很重要的。不遵循严格日志记录级别的，且要大量日志记录的应用程序，所提供的信息量，与非日志记录应用程序的相同，甚至更少。</p>
+<p>因此，重要的是，定义与之相关的事件和消息的严重性，然后对它们使用一致的日志级别。这样用户就可以通过<code>--verbose</code>标志或环境变量（如<code>RUST_LOG</code>）选择哪堆日志。</p>
+<p>常用<code>log</code>箱子<a href="https://docs.rs/log/0.4.4/log/enum.Level.html">定义</a>的以下级别（按严重性，增序）：</p>
+<ul>
+<li>trace</li>
+<li>debug</li>
+<li>info</li>
+<li>warning</li>
+<li>error</li>
+</ul>
+<p>好主意是，把 <em>info</em>作为默认日志级别。信息的输出。（一些倾向于更安静输出样式的应用程序，在默认情况下，可能只显示警告和错误。）</p>
+<p>此外，在日志消息中，使用类似的前缀和句式结构总是好的，这样，就可以使用类似<code>grep</code>来过滤它们。消息本身应该提供足够的上下文，以便在筛选日志中有用，但同时不要<em>太</em>冗长。</p>
+<a class="header" href="#日志语句示例" id="日志语句示例"><h3>日志语句示例</h3></a>
+<pre><code class="language-console">error: could not find `Cargo.toml` in `/home/you/project/`
+</code></pre>
+<pre><code class="language-console">=&gt; Downloading repository index
+=&gt; Downloading packages...
+</code></pre>
+<p>以下日志输出来自 <a href="https://crates.io/crates/wasm-pack">wasm-pack</a>：</p>
+<pre><code class="language-console"> [1/7] Adding WASM target...
+ [2/7] Compiling to WASM...
+ [3/7] Creating a pkg directory...
+ [4/7] Writing a package.json...
+ &gt; [WARN]: Field `description` is missing from Cargo.toml. It is not necessary, but recommended
+ &gt; [WARN]: Field `repository` is missing from Cargo.toml. It is not necessary, but recommended
+ &gt; [WARN]: Field `license` is missing from Cargo.toml. It is not necessary, but recommended
+ [5/7] Copying over your README...
+ &gt; [WARN]: origin crate has no README
+ [6/7] Installing WASM-bindgen...
+ &gt; [INFO]: wasm-bindgen already installed
+ [7/7] Running WASM-bindgen...
+ Done in 1 second
+</code></pre>
+<a class="header" href="#当恐慌时" id="当恐慌时"><h2>当恐慌时</h2></a>
+<p>一个经常被遗忘的方面是，当程序崩溃时，它也会输出一些东西。在 Rust 中，“崩溃”通常是“恐慌(panic)”（即，“崩溃控制”，与“操作系统杀死了进程”有所不同）。默认情况下，当发生紧急情况时，“崩溃处理程序”将向控制台打印一些信息。</p>
+<p>例如，如果使用<code>cargo new --bin foo</code>创建一个新的二进制项目，并用<code>panic!(&quot;Hello World&quot;)</code>替代<code>fn main</code>中的内容，运行程序时会得到：</p>
+<pre><code class="language-console">thread 'main' panicked at 'Hello, world!', src/main.rs:2:5
+note: Run with `RUST_BACKTRACE=1` for a backtrace.
+</code></pre>
+<p>这对你和开发者来说，都是有用的信息。（意外：程序因您的<code>main.rs</code>文件的第2行而崩溃）。但是对于一个，甚至不访问源代码的用户来说，这并不是很有价值。事实上，它很可能只是令人困惑。这就是为什么添加一个定制的崩溃处理程序是一个好的主意，它提供了一个更加注重最终用户的输出。</p>
+<p>有一个箱子就是这么做的，它叫做<a href="https://crates.io/crates/human-panic">human-panic</a>。要将其添加到 CLI 项目中，请导入它，并在<code>main</code>函数种调用<code>setup_panic!()</code>宏：</p>
+<pre><code class="language-rust ignore">use human_panic::setup_panic;
+
+fn main() {
+   setup_panic!();
+
+   panic!(&quot;Hello world&quot;)
+}
+</code></pre>
+<p>这将显示一条非常友好的消息，并告诉用户他们可以做什么：</p>
+<pre><code class="language-console">Well, this is embarrassing.
+
+foo had a problem and crashed. To help us diagnose the problem you can send us a crash report.
+
+We have generated a report file at &quot;/var/folders/n3/dkk459k908lcmkzwcmq0tcv00000gn/T/report-738e1bec-5585-47a4-8158-f1f7227f0168.toml&quot;. Submit an issue or email with the subject of &quot;foo Crash Report&quot; and include the report as an attachment.
+
+- Authors: Your Name &lt;your.name@example.com&gt;
+
+We take privacy seriously, and do not perform any automated error collection. In order to improve the software, we rely on people to submit reports.
+
+Thank you kindly!
+</code></pre>
+
+                </main>
+
+                <nav class="nav-wrapper" aria-label="Page navigation">
+                    <!-- Mobile navigation buttons -->
+                    
+                    <a rel="prev" href="../in-depth/exit-code.zh.html" class="mobile-nav-chapters previous" title="Previous chapter"
+                        aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                    
+
+                    
+                    <a rel="next" href="../in-depth/machine-communication.zh.html" class="mobile-nav-chapters next" title="Next chapter"
+                        aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+                    
+
+                    <div style="clear: both"></div>
+                </nav>
+            </div>
+        </div>
+
+        <nav class="nav-wide-wrapper" aria-label="Page navigation">
+            
+            <a href="../in-depth/exit-code.zh.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter"
+                aria-keyshortcuts="Left">
+                <i class="fa fa-angle-left"></i>
+            </a>
+            
+
+            
+            <a href="../in-depth/machine-communication.zh.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter"
+                aria-keyshortcuts="Right">
+                <i class="fa fa-angle-right"></i>
+            </a>
+            
+        </nav>
+
+    </div>
+
+    
+
+    
+    <!-- Google Analytics Tag -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-128555056-1"></script>
+    
+    <script type="text/javascript">
+        var localAddrs = ["localhost", "127.0.0.1", ""];
+        if (localAddrs.indexOf(document.location.hostname) === -1) {
+            window.dataLayer = window.dataLayer || [];
+            function gtag() { dataLayer.push(arguments); }
+            gtag('js', new Date());
+
+            gtag('config', 'UA-128555056-1');
+        }
+    </script>
+    
+
+    
+
+    
+    <script src="../elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../mark.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../searcher.js" type="text/javascript" charset="utf-8"></script>
+    
+
+    <script src="../clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../highlight.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../book.js" type="text/javascript" charset="utf-8"></script>
+
+    <!-- Custom JS scripts -->
+    
+
+    
+
+</body>
+
+</html>

@@ -1,0 +1,351 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js">
+
+<head>
+    <!-- Book generated using mdBook -->
+    <meta charset="UTF-8">
+    <title>与机器交互 - Rust 的命令行应用</title>
+    <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#ffffff" />
+
+    <link rel="shortcut icon" href="../favicon.png">
+    <link rel="stylesheet" href="../css/variables.css">
+    <link rel="stylesheet" href="../css/general.css">
+    <link rel="stylesheet" href="../css/chrome.css">
+    <link rel="stylesheet" href="../css/print.css" media="print">
+
+    <!-- Fonts -->
+    <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800"
+        rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro:500" rel="stylesheet" type="text/css">
+
+    <!-- Highlight.js Stylesheets -->
+    <link rel="stylesheet" href="../highlight.css">
+    <link rel="stylesheet" href="../tomorrow-night.css">
+    <link rel="stylesheet" href="../ayu-highlight.css">
+
+    <!-- Custom theme stylesheets -->
+    
+    <link rel="stylesheet" href="../src/special-content.css">
+    
+
+    
+</head>
+
+<body class="light">
+    <!-- Provide site root to javascript -->
+    <script type="text/javascript">var path_to_root = "../";</script>
+
+    <!-- Work around some values being stored in localStorage wrapped in quotes -->
+    <script type="text/javascript">
+        try {
+            var theme = localStorage.getItem('mdbook-theme');
+            var sidebar = localStorage.getItem('mdbook-sidebar');
+
+            if (theme.startsWith('"') && theme.endsWith('"')) {
+                localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+            }
+
+            if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+            }
+        } catch (e) { }
+    </script>
+
+    <!-- Set the theme before any content is loaded, prevents flash -->
+    <script type="text/javascript">
+        var theme;
+        try { theme = localStorage.getItem('mdbook-theme'); } catch (e) { }
+        if (theme === null || theme === undefined) { theme = 'light'; }
+        document.body.className = theme;
+        document.querySelector('html').className = theme + ' js';
+    </script>
+
+    <!-- Hide / unhide sidebar before it is displayed -->
+    <script type="text/javascript">
+        var html = document.querySelector('html');
+        var sidebar = 'hidden';
+        if (document.body.clientWidth >= 1080) {
+            try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch (e) { }
+            sidebar = sidebar || 'visible';
+        }
+        html.classList.remove('sidebar-visible');
+        html.classList.add("sidebar-" + sidebar);
+    </script>
+
+    <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+        <ol class="chapter"><li class="affix"><a href="../README.zh.html">开始</a></li><li><a href="../tutorial/README.zh.html"><strong aria-hidden="true">1.</strong> 15 分钟内完成一个命令行应用程序</a></li><li><ol class="section"><li><a href="../tutorial/setup.zh.html"><strong aria-hidden="true">1.1.</strong> 项目设置</a></li><li><a href="../tutorial/cli-args.zh.html"><strong aria-hidden="true">1.2.</strong> 对命令行参数解析</a></li><li><a href="../tutorial/impl-draft.zh.html"><strong aria-hidden="true">1.3.</strong> 第一次实现</a></li><li><a href="../tutorial/errors.zh.html"><strong aria-hidden="true">1.4.</strong> 更好的错误报告</a></li><li><a href="../tutorial/output.zh.html"><strong aria-hidden="true">1.5.</strong> 给人和机器的输出</a></li><li><a href="../tutorial/testing.zh.html"><strong aria-hidden="true">1.6.</strong> 测试</a></li><li><a href="../tutorial/packaging.zh.html"><strong aria-hidden="true">1.7.</strong> 打包和分发一个 Rust 工具</a></li></ol></li><li><a href="../in-depth/README.zh.html"><strong aria-hidden="true">2.</strong> 深入的主题</a></li><li><ol class="section"><li><a href="../in-depth/signals.zh.html"><strong aria-hidden="true">2.1.</strong> 信号处理</a></li><li><a href="../in-depth/config-files.zh.html"><strong aria-hidden="true">2.2.</strong> 使用配置文件</a></li><li><a href="../in-depth/exit-code.zh.html"><strong aria-hidden="true">2.3.</strong> 退出代码</a></li><li><a href="../in-depth/human-communication.zh.html"><strong aria-hidden="true">2.4.</strong> 与人交流</a></li><li><a href="../in-depth/machine-communication.zh.html" class="active"><strong aria-hidden="true">2.5.</strong> 与机器交互</a></li><li><a href="../in-depth/docs.zh.html"><strong aria-hidden="true">2.6.</strong> CLI 应用程序呈现的文档</a></li></ol></li></ol>
+    </nav>
+
+    <div id="page-wrapper" class="page-wrapper">
+
+        <div class="page">
+            
+            <div id="menu-bar" class="menu-bar">
+                <div id="menu-bar-sticky-container">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents"
+                            aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <!-- START - Rust Cookbook customization -->
+                        <button id="edit-button" class="icon-button" type="button" title="Fork and edit" aria-label="Fork and edit"
+                            aria-haspopup="true" aria-expanded="false" aria-controls="edit">
+                            <i class="fa fa-edit">Edit</i>
+                        </button>
+                        <!-- END - Rust Cookbook customization -->
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme"
+                            aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light <span class="default">(default)</span></button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)"
+                            aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                        
+                    </div>
+
+                    <h1 class="menu-title">Rust 的命令行应用</h1>
+                    
+                        <div class="right-buttons">
+                            <a href="../print.html" title="Print this book" aria-label="Print this book">
+                                <i id="print-button" class="fa fa-print"></i>
+                            </a>
+                            
+                        </div>
+                    </div>
+                </div>
+
+            
+            <div id="search-wrapper" class="hidden">
+                <form id="searchbar-outer" class="searchbar-outer">
+                    <input type="search" name="search" id="searchbar" name="searchbar" placeholder="Search this book ..."
+                        aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                </form>
+                <div id="searchresults-outer" class="searchresults-outer hidden">
+                    <div id="searchresults-header" class="searchresults-header"></div>
+                    <ul id="searchresults">
+                    </ul>
+                </div>
+            </div>
+            
+
+            <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+            <script type="text/javascript">
+                document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                Array.from(document.querySelectorAll('#sidebar a')).forEach(function (link) {
+                    link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                });
+            </script>
+
+            <!-- // START - Rust Cookbook customization -->
+            <script>
+                document.getElementById("edit-button").addEventListener("click", function () {
+                    var editWindow = window.open("https://github.com/chinanf-boy/cli-wg-zh/edit/master/src/in-depth/machine-communication.zh.md");
+                });</script>
+            <!-- // END - Rust Cookbook customization -->
+
+            <div id="content" class="content">
+                <main>
+                    <a class="header" href="#与机器交互" id="与机器交互"><h1>与机器交互</h1></a>
+<p>当您能够组合命令行工具时，它们的威力真的会很闪耀。这不是一个新想法：事实上，这是<a href="https://en.wikipedia.org/wiki/Unix_philosophy">Unix 哲学</a>：</p>
+<blockquote>
+<p>期望每个程序的输出，都成为另一个程序的输入，这正是你无法想像的程序。</p>
+</blockquote>
+<p>如果我们的程序满足这个期望，我们的用户会很高兴。为了确保这项工作良好，我们不仅应该为人类提供相当好的输出，还应该为其他程序提供一个适合的版本。让我们看看怎么做。</p>
+<aside>
+<p><strong>旁白：</strong> 确保先阅读在教程中的<a href="../tutorial/output.zh.html">关于 CLI 输出的章节</a>。它包括如何将输出写入终端。</p>
+</aside>
+<a class="header" href="#谁在读取" id="谁在读取"><h2>谁在读取？</h2></a>
+<p>要问的第一个问题是：我们的输出是给彩色终端前的人类，还是给另一个程序？为了回答这个问题，我们可以使用像<a href="https://crates.io/crates/atty">atty</a>这样的箱子：</p>
+<pre><code class="language-rust ignore">use atty::Stream;
+
+if atty::is(Stream::Stdout) {
+    println!(&quot;I'm a terminal&quot;);
+} else {
+    println!(&quot;I'm not&quot;);
+}
+</code></pre>
+<p>根据谁读取我们的输出，我们之后就可以添加额外的信息。人类喜欢颜色，例如，如果你在一个随机的 Rust 项目中运行<code>ls</code>，您可能会看到这样的情况：</p>
+<pre><code class="language-console">$ ls
+CODE_OF_CONDUCT.md   LICENSE-APACHE       examples
+CONTRIBUTING.md      LICENSE-MIT          proptest-regressions
+Cargo.lock           README.md            src
+Cargo.toml           convey_derive        target
+</code></pre>
+<p>因为这种样式是为人类设计的，在大多数配置中，它甚至会打印一些名称（例如<code>src</code>），并以彩色显示它们是目录。如果您改为将这个输出，经过管道传输到文件或类似<code>cat</code>的程序，<code>ls</code>会调整其输出。它将在单行上，打印每个条目，而不是使用适合我的终端窗口的列数。它也不会发出任何颜色。</p>
+<pre><code class="language-console">$ ls | cat
+CODE_OF_CONDUCT.md
+CONTRIBUTING.md
+Cargo.lock
+Cargo.toml
+LICENSE-APACHE
+LICENSE-MIT
+README.md
+convey_derive
+examples
+proptest-regressions
+src
+target
+</code></pre>
+<a class="header" href="#机器的简单输出格式" id="机器的简单输出格式"><h2>机器的简单输出格式</h2></a>
+<p>历史上，命令行工具生成输出的唯一类型，就是字符串。对于那些在终端前，能够阅读文本和理解其含义的人来说，这通常是很好的。但是，其他程序通常没有这种能力：它们理解类似<code>ls</code>工具输出的唯一方法，就在于程序的作者是否包含一个<code>ls</code>输出的解析器。</p>
+<p>这通常意味着，输出仅限于易于解析的内容。像 TSV（Tab 分隔值）这样的格式非常流行，其中每个记录都在自己的行上，并且每一行包含 tab 分隔的内容。这些基于文本行的简单格式，允许<code>grep</code>能用在像<code>ls</code>这样会输出的工具上。<code>| grep Cargo</code>才不管你的文本是不是来自<code>ls</code>或者文件，它都会逐行过滤。</p>
+<p>缺点是你不能用简单调用<code>grep</code>，就筛选<code>ls</code>给你的所有目录。因为，每个目录项，都需要携带额外的数据。</p>
+<a class="header" href="#机器的-json-输出" id="机器的-json-输出"><h2>机器的 JSON 输出</h2></a>
+<p>tab 分隔值是输出结构化数据的一种简单方法，但它要求另一个程序知道要预想哪个字段（以及顺序），并且很难输出不同类型的消息。例如，假设我们的程序，想向用户发送消息，告诉他们，它当前正在等待下载，然后输出一条消息，描述它得到的数据。这些都可能是非常不同的类型的消息，试图在 TSV 输出中统一它们，需要我们发明一种方法来区分它们。同样的情况还有，当我们想要打印包含两个不同长度项的列表的消息时。</p>
+<p>不过，最好选择一种在大多数编程语言/环境中，都易于解析的格式。因此，在过去的几年中，许多应用程序都发展<a href="https://www.json.org/">JSON</a>的解析能力。JSON 很简单，几乎每种语言都存在它的解析器，但其强大程度，足以在许多情况下发挥作用。虽然它是一种人类可以读取的文本格式，但许多人也在，解析 JSON 数据，和将数据序列化为 JSON 方面做了许多工作，现已是速度非常快的实现了。</p>
+<p>在上面的描述中，我们已经讨论过程序要编写“消息”。这是一种考虑输出的好方法：其实程序不一定只输出一个数据块，而实际上，在运行的时候可能会发出许多不同(类型)的信息。在输出 JSON 时，支持这种方法的一个简单方法，是为每条消息编写一个 JSON 文档，并将每个 JSON 文档放到新的一行（有时，调用下<a href="https://en.wikipedia.org/wiki/JSON_streaming#Line-delimited_JSON">行-分隔 JSON</a>）。这可以让(信息)实现像使用常规的<code>println!</code>一样简单。</p>
+<p>下面是一个简单的例子，使用来自<a href="https://crates.io/crates/serde_json">serde_json</a>的<code>json!</code>宏，用来在您的 Rust 源代码中，快速编写有效的 JSON：</p>
+<pre><code class="language-rust ignore">use structopt::StructOpt;
+use serde_json::json;
+
+/// Search for a pattern in a file and display the lines that contain it.
+#[derive(StructOpt)]
+struct Cli {
+    /// Output JSON instead of human readable messages
+    #[structopt(long = &quot;json&quot;)]
+    json: bool,
+}
+
+fn main() {
+    let args = Cli::from_args();
+    if args.json {
+        println!(&quot;{}&quot;, json!({
+            &quot;type&quot;: &quot;message&quot;,
+            &quot;content&quot;: &quot;Hello world&quot;,
+        }));
+    } else {
+        println!(&quot;Hello world&quot;);
+    }
+}
+</code></pre>
+<p>下面是输出：</p>
+<pre><code class="language-console">$ cargo run -q
+Hello world
+$ cargo run -q -- --json
+{&quot;content&quot;:&quot;Hello world&quot;,&quot;type&quot;:&quot;message&quot;}
+</code></pre>
+<p>（运行<code>cargo</code>带<code>-q</code>，能抑制其正常输出。<code>--</code>后面的参数被传递到我们的程序。）</p>
+<a class="header" href="#实例ripgrep" id="实例ripgrep"><h3>实例：ripgrep</h3></a>
+<p>*<a href="https://github.com/BurntSushi/ripgrep">ripgrep</a>*是 <em>grep</em> 或 <em>ag</em> 的替代品，用 Rust 写的。默认情况下，它将生成如下输出：</p>
+<pre><code class="language-console">$ rg default
+src/lib.rs
+37:    Output::default()
+
+src/components/span.rs
+6:    Span::default()
+</code></pre>
+<p>但是给出<code>--json</code>，它将打印：</p>
+<pre><code class="language-console">$ rg default --json
+{&quot;type&quot;:&quot;begin&quot;,&quot;data&quot;:{&quot;path&quot;:{&quot;text&quot;:&quot;src/lib.rs&quot;}}}
+{&quot;type&quot;:&quot;match&quot;,&quot;data&quot;:{&quot;path&quot;:{&quot;text&quot;:&quot;src/lib.rs&quot;},&quot;lines&quot;:{&quot;text&quot;:&quot;    Output::default()\n&quot;},&quot;line_number&quot;:37,&quot;absolute_offset&quot;:761,&quot;submatches&quot;:[{&quot;match&quot;:{&quot;text&quot;:&quot;default&quot;},&quot;start&quot;:12,&quot;end&quot;:19}]}}
+{&quot;type&quot;:&quot;end&quot;,&quot;data&quot;:{&quot;path&quot;:{&quot;text&quot;:&quot;src/lib.rs&quot;},&quot;binary_offset&quot;:null,&quot;stats&quot;:{&quot;elapsed&quot;:{&quot;secs&quot;:0,&quot;nanos&quot;:137622,&quot;human&quot;:&quot;0.000138s&quot;},&quot;searches&quot;:1,&quot;searches_with_match&quot;:1,&quot;bytes_searched&quot;:6064,&quot;bytes_printed&quot;:256,&quot;matched_lines&quot;:1,&quot;matches&quot;:1}}}
+{&quot;type&quot;:&quot;begin&quot;,&quot;data&quot;:{&quot;path&quot;:{&quot;text&quot;:&quot;src/components/span.rs&quot;}}}
+{&quot;type&quot;:&quot;match&quot;,&quot;data&quot;:{&quot;path&quot;:{&quot;text&quot;:&quot;src/components/span.rs&quot;},&quot;lines&quot;:{&quot;text&quot;:&quot;    Span::default()\n&quot;},&quot;line_number&quot;:6,&quot;absolute_offset&quot;:117,&quot;submatches&quot;:[{&quot;match&quot;:{&quot;text&quot;:&quot;default&quot;},&quot;start&quot;:10,&quot;end&quot;:17}]}}
+{&quot;type&quot;:&quot;end&quot;,&quot;data&quot;:{&quot;path&quot;:{&quot;text&quot;:&quot;src/components/span.rs&quot;},&quot;binary_offset&quot;:null,&quot;stats&quot;:{&quot;elapsed&quot;:{&quot;secs&quot;:0,&quot;nanos&quot;:22025,&quot;human&quot;:&quot;0.000022s&quot;},&quot;searches&quot;:1,&quot;searches_with_match&quot;:1,&quot;bytes_searched&quot;:5221,&quot;bytes_printed&quot;:277,&quot;matched_lines&quot;:1,&quot;matches&quot;:1}}}
+{&quot;data&quot;:{&quot;elapsed_total&quot;:{&quot;human&quot;:&quot;0.006995s&quot;,&quot;nanos&quot;:6994920,&quot;secs&quot;:0},&quot;stats&quot;:{&quot;bytes_printed&quot;:533,&quot;bytes_searched&quot;:11285,&quot;elapsed&quot;:{&quot;human&quot;:&quot;0.000160s&quot;,&quot;nanos&quot;:159647,&quot;secs&quot;:0},&quot;matched_lines&quot;:2,&quot;matches&quot;:2,&quot;searches&quot;:2,&quot;searches_with_match&quot;:2}},&quot;type&quot;:&quot;summary&quot;}
+</code></pre>
+<p>如您所见，每个 JSON 文档都是一个包含<code>type</code>字段的对象(map)。这将允许我们为<code>rg</code>编写一个简单前端，读取它们所在的文档，并显示匹配项（以及它们所在的文件）时，即便<em>ripgrep</em>仍在搜索。</p>
+<aside>
+<p><strong>旁白：</strong> 这就是 Visual Studio Code 的代码搜索，使用的是<em>ripgrep</em>。</p>
+</aside>
+<a class="header" href="#对人和机器输出的摘要" id="对人和机器输出的摘要"><h2>对人和机器输出的摘要</h2></a>
+<p><a href="https://crates.io/crates/convey">convey</a>是一个正在开发的库，它试图让输出消息更容易，以适合人类和机器格式。您定义自己的消息类型，并实现一个<code>Render</code>trait（可在宏的帮助下，手动编写，或者使用派生属性）来说明它们应该如何格式化。目前，它支持打印人类输出（包括，自动检测是否应该上色）、写 JSON 文档（可以是<code>stdout</code>或者指向一个文件）或者是兼顾两者。</p>
+<p>即使您不使用这个库，编写一个适合您用例的相仿抽象，也是一个好主意。</p>
+<a class="header" href="#如何处理流入我们的输入" id="如何处理流入我们的输入"><h2>如何处理流入我们的输入</h2></a>
+<aside class="todo">
+<p><strong>TODO：</strong> 讨论如何使用 stdin（请参见<a href="https://github.com/rust-lang-nursery/cli-wg/issues/95">α95</a>）</p>
+</aside>
+
+                </main>
+
+                <nav class="nav-wrapper" aria-label="Page navigation">
+                    <!-- Mobile navigation buttons -->
+                    
+                    <a rel="prev" href="../in-depth/human-communication.zh.html" class="mobile-nav-chapters previous" title="Previous chapter"
+                        aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                    
+
+                    
+                    <a rel="next" href="../in-depth/docs.zh.html" class="mobile-nav-chapters next" title="Next chapter"
+                        aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+                    
+
+                    <div style="clear: both"></div>
+                </nav>
+            </div>
+        </div>
+
+        <nav class="nav-wide-wrapper" aria-label="Page navigation">
+            
+            <a href="../in-depth/human-communication.zh.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter"
+                aria-keyshortcuts="Left">
+                <i class="fa fa-angle-left"></i>
+            </a>
+            
+
+            
+            <a href="../in-depth/docs.zh.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter"
+                aria-keyshortcuts="Right">
+                <i class="fa fa-angle-right"></i>
+            </a>
+            
+        </nav>
+
+    </div>
+
+    
+
+    
+    <!-- Google Analytics Tag -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-128555056-1"></script>
+    
+    <script type="text/javascript">
+        var localAddrs = ["localhost", "127.0.0.1", ""];
+        if (localAddrs.indexOf(document.location.hostname) === -1) {
+            window.dataLayer = window.dataLayer || [];
+            function gtag() { dataLayer.push(arguments); }
+            gtag('js', new Date());
+
+            gtag('config', 'UA-128555056-1');
+        }
+    </script>
+    
+
+    
+
+    
+    <script src="../elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../mark.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../searcher.js" type="text/javascript" charset="utf-8"></script>
+    
+
+    <script src="../clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../highlight.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../book.js" type="text/javascript" charset="utf-8"></script>
+
+    <!-- Custom JS scripts -->
+    
+
+    
+
+</body>
+
+</html>

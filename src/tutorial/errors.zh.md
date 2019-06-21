@@ -22,7 +22,7 @@ match result {
 
 <aside>
 
-**旁白：**不知道 Rust 的 enum 是什么，也不知道它们是如何工作？[查看 Rust 之书的有关章节](https://doc.rust-lang.org/1.31.0/book/ch06-00-enums.html)，跟上，跟上。
+**旁白：** 不知道 Rust 的 enum 是什么，也不知道它们是如何工作？[查看 Rust 之书的有关章节](https://doc.rust-lang.org/1.31.0/book/ch06-00-enums.html)，跟上，跟上。
 
 </aside>
 
@@ -82,7 +82,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
 
 <aside>
 
-**旁白：**为什么这不是写为`return Ok(());`？很容易——这也是完全有效的。在 Rust 中，作用域内的最后一个表达式(不加`;`结尾)是它的返回值，并且习惯上省略不必要的`return`。
+**旁白：** 为什么这不是写为`return Ok(());`？很容易——这也是完全有效的。在 Rust 中，作用域内的最后一个表达式(不加`;`结尾)是它的返回值，并且习惯上省略不必要的`return`。
 
 </aside>
 
@@ -106,7 +106,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
 
 <aside>
 
-**旁白：**这里还发生了一些不需要理解的事情。例如，我们的`main`函数是`Box<dyn std::error::Error>`. 但我们已经看到`read_to_string`是返回[`std::io::Error`]的。这是因为`?`扩展了*转换*错误类型的代码。
+**旁白：** 这里还发生了一些不需要理解的事情。例如，我们的`main`函数是`Box<dyn std::error::Error>`. 但我们已经看到`read_to_string`是返回[`std::io::Error`]的。这是因为`?`扩展了*转换*错误类型的代码。
 
 `Box<dyn std::error::Error>`也是一种有趣的类型。这是一个`Box`可以包含*任何*实现标准[`Error`][`std::error::error`]trait 的类型。这意味着基本上所有的错误都可以放入这个 Box 中，所以我们可以把`?`，用在会返回`Result`的所有常规函数上。
 

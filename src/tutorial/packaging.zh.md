@@ -28,7 +28,7 @@ categories = ["command-line-utilities"]
 
 <aside class="note">
 
-**注：**这个例子包括强制的许可证字段，是给 Rust 项目的常见选择：该许可证还用于 Rust 编译器本身。它还指向一个`README.md`文件。它应该包括对您的项目是关于什么的一个快速描述，并且不仅会在您箱子的 crates.io 页面上，而且还包括 Github 默认情况下在存储库页面上显示的。
+**注：** 这个例子包括强制的许可证字段，是给 Rust 项目的常见选择：该许可证还用于 Rust 编译器本身。它还指向一个`README.md`文件。它应该包括对您的项目是关于什么的一个快速描述，并且不仅会在您箱子的 crates.io 页面上，而且还包括 Github 默认情况下在存储库页面上显示的。
 
 </aside>
 
@@ -94,7 +94,7 @@ Rust 是一种编译为本机代码的语言，默认情况下静态链接所有
 
 <aside class="note">
 
-**注：**如果你用[trust]构建二进制文件，并将其添加到 GitHub 版本中，还可以告诉人们运行`curl -LSfs https://japaric.github.io/trust/install.sh | sh -s -- --git your-name/repo-name`，如果你认为这样更容易的话。
+**注：** 如果你用[trust]构建二进制文件，并将其添加到 GitHub 版本中，还可以告诉人们运行`curl -LSfs https://japaric.github.io/trust/install.sh | sh -s -- --git your-name/repo-name`，如果你认为这样更容易的话。
 
 </aside>
 

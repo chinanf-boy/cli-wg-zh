@@ -8,7 +8,7 @@
 
 <aside>
 
-**旁白：**可以看看[测试驱动开发](TDD)，如果你还没头绪的话。
+**旁白：** 可以看看[测试驱动开发](TDD)，如果你还没头绪的话。
 
 [test-driven development]: https://en.wikipedia.org/wiki/Test-driven_development
 
@@ -31,7 +31,7 @@ fn check_answer_validity() {
 
 <aside class="exercise">
 
-**读者练习：**使此测试工作。
+**读者练习：** 使此测试工作。
 
 您应该以如下输出结束：
 
@@ -88,7 +88,7 @@ fn find_a_match() {
 
 <aside class="note">
 
-**注：**在编写小型 CLI 应用程序时，这完全可以。没有必要所有东西都可以测试！而且，重要的是要考虑代码的哪些部分，可能需要编写单元测试。虽然我们(似乎)看到，可以很容易将此函数更改为可测试的(闭环状态)，但情况并非总是如此。
+**注：** 在编写小型 CLI 应用程序时，这完全可以。没有必要所有东西都可以测试！而且，重要的是要考虑代码的哪些部分，可能需要编写单元测试。虽然我们(似乎)看到，可以很容易将此函数更改为可测试的(闭环状态)，但情况并非总是如此。
 
 </aside>
 
@@ -123,19 +123,19 @@ fn find_a_match() {
 
 <aside class="note">
 
-**注：**因为`stdout`需要字节(byte)（不是字符串），我们使用`std::io::Write`而不是`std::fmt::Write`。 因此，在我们的测试中，我们把空向量赋给“writer”（其类型将推断为`Vec<u8>`），而在`assert_eq!`我们使用一个`b"foo"`。(`b`前缀使其成为*字节字符串文本*，以它的类型是`&[u8]`，而不是`&str`。）
+**注：** 因为`stdout`需要字节(byte)（不是字符串），我们使用`std::io::Write`而不是`std::fmt::Write`。 因此，在我们的测试中，我们把空向量赋给“writer”（其类型将推断为`Vec<u8>`），而在`assert_eq!`我们使用一个`b"foo"`。(`b`前缀使其成为*字节字符串文本*，以它的类型是`&[u8]`，而不是`&str`。）
 
 </aside>
 
 <aside class="note">
 
-**注：**我们还可以使这个函数返回一个`String`，但这会改变它的行为。我们选择不再直接写入终端，而是将所有内容收集到一个字符串中，并在末尾一次性转储所有结果。
+**注：** 我们还可以使这个函数返回一个`String`，但这会改变它的行为。我们选择不再直接写入终端，而是将所有内容收集到一个字符串中，并在末尾一次性转储所有结果。
 
 </aside>
 
 <aside class="exercise">
 
-**读者练习：**
+**读者练习：** 
 [`writeln!`]返回一个[`io::Result`]，因为写入可能会失败，例如当缓冲区已满且无法扩展时。向`find_matches`添加错误处理。
 
 [`writeln!`]: https://doc.rust-lang.org/1.31.0/std/macro.writeln.html
@@ -164,7 +164,7 @@ Rust 处理项目的方式是相当灵活的，尽早考虑将什么放入您的
 
 <aside class="note">
 
-**注：**说到如果我们继续，把所有的东西都堆到`src/main.rs`，它就会变得难以阅读。这个[模块化系统][module system]可以帮助您构造和组织代码。
+**注：** 说到如果我们继续，把所有的东西都堆到`src/main.rs`，它就会变得难以阅读。这个[模块化系统][module system]可以帮助您构造和组织代码。
 
 [module system]: https://doc.rust-lang.org/1.31.0/book/ch07-00-packages-crates-and-modules.html
 
@@ -180,7 +180,7 @@ Rust 处理项目的方式是相当灵活的，尽早考虑将什么放入您的
 
 <aside>
 
-**旁白：**按照惯例，`cargo`将在`tests/`目录中查找集成测试。同样，它也会看`benches/`中的基准测试和`examples`中的示例测试。这些(测试)约定还扩展到了您主要的源代码：比如库可以有一个`src/lib.rs`文件，main 二进制文件是`src/main.rs`或者，如果有多个二进制文件，则 cargo 希望它们位于`src/bin/<name>.rs`. 遵循这些约定将使阅读 rust 代码的人更明了您的代码库。
+**旁白：** 按照惯例，`cargo`将在`tests/`目录中查找集成测试。同样，它也会看`benches/`中的基准测试和`examples`中的示例测试。这些(测试)约定还扩展到了您主要的源代码：比如库可以有一个`src/lib.rs`文件，main 二进制文件是`src/main.rs`或者，如果有多个二进制文件，则 cargo 希望它们位于`src/bin/<name>.rs`. 遵循这些约定将使阅读 rust 代码的人更明了您的代码库。
 
 </aside>
 
