@@ -13,16 +13,12 @@
 ./source/src/tutorial/output-progressbar.rs
 ./source/src/tutorial/testing/src/main.rs
 ./source/src/tutorial/testing/tests/cli.rs
-./source/CODE_OF_CONDUCT.md
-./source/CODE_OF_CONDUCT.zh.md
 ./source/README.md
 ./source/logs/2018-05-03-packaging.md
 ./source/logs/2018-05-03-packaging.zh.md
 ./source/readme.zh.md
 ./source/src/README.md
 ./source/src/README.zh.md
-./source/src/SUMMARY.md
-./source/src/SUMMARY.zh.md
 ./source/src/in-depth/README.md
 ./source/src/in-depth/README.zh.md
 ./source/src/in-depth/config-files.md

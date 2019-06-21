@@ -67,7 +67,7 @@ and sentence structure across log messages,
 making it easy to use a tool like `grep` to filter for them.
 A message should provide enough context by itself
 to be useful in a filtered log
-while not being _too_ verbose at the same time.
+while not being *too* verbose at the same time.
 
 [log-levels]: https://docs.rs/log/0.4.4/log/enum.Level.html
 

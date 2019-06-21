@@ -33,26 +33,24 @@
 
 - [x] readme.md
   <!-- - [ ] [./logs/2018-05-03-packaging.md](./logs/2018-05-03-packaging.zh.md) -->
-  - [ ] [./survey-results/Readme.md](./survey-results/Readme.zh.md)
+  - [ ] [Rust CLI 调研](./survey-results/Readme.zh.md)
 - [x] [./src/SUMMARY.md](./src/SUMMARY.md)
-  - [x] [./src/README.md](./src/README.zh.md)
-  - tutorial
-    - [x] [./src/tutorial/README.md](./src/tutorial/README.zh.md)
-    - [x] [./src/tutorial/cli-args.md](./src/tutorial/cli-args.zh.md)
-    - [x] [./src/tutorial/errors.md](./src/tutorial/errors.zh.md)
-    - [x] [./src/tutorial/impl-draft.md](./src/tutorial/impl-draft.zh.md)
-    - [x] [./src/tutorial/output.md](./src/tutorial/output.zh.md)
-    - [x] [./src/tutorial/packaging.md](./src/tutorial/packaging.zh.md)
-    - [x] [./src/tutorial/setup.md](./src/tutorial/setup.zh.md)
-    - [x] [./src/tutorial/testing.md](./src/tutorial/testing.zh.md)
-  - in-depth
-    - [x] [./src/in-depth/README.md](./src/in-depth/README.zh.md)
-    - [x] [./src/in-depth/signals.md](./src/in-depth/signals.zh.md)
-    - [x] [./src/in-depth/config-files.md](./src/in-depth/config-files.zh.md)
-    - [x] [./src/in-depth/exit-code.md](./src/in-depth/exit-code.zh.md)
-    - [x] [./src/in-depth/human-communication.md](./src/in-depth/human-communication.zh.md)
-    - [x] [./src/in-depth/machine-communication.md](./src/in-depth/machine-communication.zh.md)
-    - [x] [./src/in-depth/docs.md](./src/in-depth/docs.zh.md)
+- [x] [开始](./src/README.zh.md)
+- [x] [15 分钟内完成一个命令行应用程序](./src/tutorial/README.zh.md)
+  - [x] [项目设置](./src/tutorial/setup.zh.md)
+  - [x] [对命令行参数解析](./src/tutorial/cli-args.zh.md)
+  - [x] [第一次实现](./src/tutorial/impl-draft.zh.md)
+  - [x] [更好的错误报告](./src/tutorial/errors.zh.md)
+  - [x] [给人和机器的输出](./src/tutorial/output.zh.md)
+  - [x] [测试](./src/tutorial/testing.zh.md)
+  - [x] [打包和分发一个 Rust 工具](./src/tutorial/packaging.zh.md)
+- [x] [深入的主题](./src/in-depth/README.zh.md)
+  - [x] [信号处理](./src/in-depth/signals.zh.md)
+  - [x] [使用配置文件](./src/in-depth/config-files.zh.md)
+  - [x] [退出代码](./src/in-depth/exit-code.zh.md)
+  - [x] [与人交流](./src/in-depth/human-communication.zh.md)
+  - [x] [与机器交互](./src/in-depth/machine-communication.zh.md)
+  - [x] [CLI 应用程序呈现的文档](./src/in-depth/docs.zh.md)
 
 ### 贡献
 
